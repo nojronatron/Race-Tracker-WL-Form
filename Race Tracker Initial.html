@@ -386,59 +386,66 @@ function isObject(arg) {
   return Object.prototype.toString.call(arg)==='[object Object]';
 }
 
-function AddIn() {
-temp = document.getElementById("RiderNum").value;
-if (temp.length >0 ) {
-temp = rtrim(temp);
-var temp = temp.replace(/ /g,"");
-var TheRunner = temp;
-//var TheRunner = document.getElementById("RiderNum").value;
-//var TheTime = RunnerTime();
-var TheTime =document.getElementById("Timefld").value;
-//check for :
-if (TheTime.length <4) 
-{  TheTime = "0"+TheTime;} 
-if (TheTime.search(":") <0) { TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join('');}
-//if ( TheTime.indexOf(":") <0) { TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join('');}
+    function AddIn() {
+        temp = document.getElementById("RiderNum").value;
+        if (temp.length > 0) {
+            temp = rtrim(temp);
+            var temp = temp.replace(/ /g, "");
+            var TheRunner = temp;
+            var TheTime = document.getElementById("Timefld").value;
+            if (TheTime.length < 4) { TheTime = "0" + TheTime; }
+            if (TheTime.search(":") < 0) { TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join(''); }
 
+            var theDate = new Date();
+            toDay = theDate.getDate();
+            dayOfMonth = String(toDay);
+            if (dayOfMonth.length < 2) {
+                dayOfMonth = "0" + dayOfMonth;
+            }
 
-var Location = document.getElementById("Location").value;
-var Previoustime = document.getElementById("TheData").value;
-//document.getElementById("TheData").value = Previoustime+ TheRunner+"\t"+TheTime +"\t"+"IN"+"\t"+ Location + "\n";
-document.getElementById("TheData").value = Previoustime+ TheRunner+"\t"+TheTime +"\t"+"IN"+"\t"+ Location + "\n";
- document.getElementById("RiderNum").value=''; 
- document.getElementById("Timefld").value = '';
-  document.getElementById("RiderNum").focus(); 
-  countLines2();
-  } else { alert('Enter Runner/Bib number');
-    document.getElementById("RiderNum").focus(); 
+            var Location = document.getElementById("Location").value;
+            var Previoustime = document.getElementById("TheData").value;
+            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "IN", TheTime, dayOfMonth, Location);
+            document.getElementById("RiderNum").value = '';
+            document.getElementById("Timefld").value = '';
+            document.getElementById("RiderNum").focus();
+            countLines2();
+        } else {
+            alert('Enter Runner/Bib number');
+            document.getElementById("RiderNum").focus();
 
-	}
-}
-function AddOut() {
-temp = document.getElementById("RiderNum").value;
-if (temp.length >0 ) {temp = rtrim(temp);
-var temp = temp.replace(/ /g,"");
-var TheRunner = temp;
-//var TheRunner = document.getElementById("RiderNum").value;
-//var TheTime = RunnerTime();
-var TheTime =document.getElementById("Timefld").value;
-if (TheTime.length <4) 
-{  TheTime = "0"+TheTime;} 
-if (TheTime.search(":") <0) { TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join('');}
+        }
+    }
+    function AddOut() {
+        temp = document.getElementById("RiderNum").value;
+        if (temp.length > 0) {
+            temp = rtrim(temp);
+            var temp = temp.replace(/ /g, "");
+            var TheRunner = temp;
+            var TheTime = document.getElementById("Timefld").value;
+            if (TheTime.length < 4) { TheTime = "0" + TheTime; }
+            if (TheTime.search(":") < 0) { TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join(''); }
 
-var Location = document.getElementById("Location").value;
-var Previoustime = document.getElementById("TheData").value;
-document.getElementById("TheData").value = Previoustime+ TheRunner+"\t"+TheTime +"\t"+"OUT"+"\t"+ Location + "\n";
- document.getElementById("RiderNum").value=''; 
-  document.getElementById("Timefld").value = '';
-  document.getElementById("RiderNum").focus(); 
-    countLines2();
-	} else { alert('Enter Runner/Bib number');
-	  document.getElementById("RiderNum").focus(); 
+            var theDate = new Date();
+            toDay = theDate.getDate();
+            dayOfMonth = String(toDay);
+            if (dayOfMonth.length < 2) {
+                dayOfMonth = "0" + dayOfMonth;
+            }
 
-	}
-}
+            var Location = document.getElementById("Location").value;
+            var Previoustime = document.getElementById("TheData").value;
+            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "OUT", TheTime, dayOfMonth, Location);
+            document.getElementById("RiderNum").value = '';
+            document.getElementById("Timefld").value = '';
+            document.getElementById("RiderNum").focus();
+            countLines2();
+        } else {
+            alert('Enter Runner/Bib number');
+            document.getElementById("RiderNum").focus();
+
+        }
+    }
 
 function moveCursorToEnd(obj) {
 
@@ -451,33 +458,41 @@ function moveCursorToEnd(obj) {
 
 }
 
-function AddDrop() {
-temp = document.getElementById("RiderNum").value;
-if (temp.length >0 ) {
+    function AddDrop() {
+        temp = document.getElementById("RiderNum").value;
+        if (temp.length > 0) {
 
-temp = rtrim(temp);
-var temp = temp.replace(/ /g,"");
-var TheRunner = temp;
-//var TheRunner = document.getElementById("RiderNum").value;
-//var TheTime = RunnerTime();
-var TheTime =document.getElementById("Timefld").value;
-if (TheTime.length <4) 
-{  TheTime = "0"+TheTime;} 
-if (TheTime.search(":") <0) { TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join('');}
+            temp = rtrim(temp);
+            var temp = temp.replace(/ /g, "");
+            var TheRunner = temp;
+            var TheTime = document.getElementById("Timefld").value;
+            if (TheTime.length < 4) { TheTime = "0" + TheTime; }
+            if (TheTime.search(":") < 0) { TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join(''); }
 
-var Location = document.getElementById("Location").value;
-var Previoustime = document.getElementById("TheData").value;
-document.getElementById("TheData").value = Previoustime+ TheRunner+"\t"+TheTime +"\t"+"DROP"+"\t"+ Location + "\n";
- document.getElementById("RiderNum").value=''; 
-  document.getElementById("Timefld").value = '';
-  document.getElementById("RiderNum").focus(); 
-    countLines2();
-	} else { alert('Enter Runner/Bib number');
-	  document.getElementById("RiderNum").focus(); 
+            var theDate = new Date();
+            toDay = theDate.getDate();
+            dayOfMonth = String(toDay);
+            if (dayOfMonth.length < 2) {
+                dayOfMonth = "0" + dayOfMonth;
+            }
 
-	}
-}
+            var Location = document.getElementById("Location").value;
+            var Previoustime = document.getElementById("TheData").value;
+            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "DROP", TheTime, dayOfMonth, Location);
+            document.getElementById("RiderNum").value = '';
+            document.getElementById("Timefld").value = '';
+            document.getElementById("RiderNum").focus();
+            countLines2();
+        } else {
+            alert('Enter Runner/Bib number');
+            document.getElementById("RiderNum").focus();
 
+        }
+    }
+
+    function FormatBibRecord(pTime, tRunner, action, tTime, doM, loc) {
+        return pTime + tRunner + "\t" + action + "\t" + tTime + "\t" + doM + "\t"  + loc + "\n";
+    }
 function Sortit(){
 var myString = document.getElementById("TheData").value;
 

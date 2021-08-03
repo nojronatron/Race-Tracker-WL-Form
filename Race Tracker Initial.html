@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 
 "http://www.w3.org/TR/xhtml/DTD/xhtml-transitional.dtd">
@@ -11,394 +9,324 @@
 <title>Race Tracker</title> 
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="author" content="Greg KG6SJT" />
+    <meta name="author" content="Jon K7RMZ" />
+    <meta name="description" content="Race Tracker Form for Winlink Express created by KG6SJT, modified by K7RMZ for Bigfoot ultra marathon comms-support events." />
 <script language="javascript" type="text/javascript"> 
 
 <!-- 
 
-    function store(){
+    function store() {
+        var formatted = document.getElementById("address");
+        localStorage.setItem("RTrackeradd", formatted.value);
+        var formatted = document.getElementById("Location");
+        localStorage.setItem("RTrackerloc", formatted.value);
+        var formatted = document.getElementById("EventTitle");
+        localStorage.setItem("RTrackertitle", formatted.value);
+        var regulartitle = document.getElementById('EventTitle').value + ' [Track Times at]: ' + document.getElementById('Location').value;
+        document.getElementById('msgsubject').value = regulartitle;
+    }	
 
- var formatted= document.getElementById("address");
-
-     localStorage.setItem("RTrackeradd", formatted.value);
-
-	 var formatted= document.getElementById("Location");
-    localStorage.setItem("RTrackerloc", formatted.value);
-	 var formatted= document.getElementById("EventTitle");
-    localStorage.setItem("RTrackertitle", formatted.value);
-	var regulartitle  = document.getElementById('EventTitle').value + ' [Track Times at]: ' +  document.getElementById('Location').value;
-	document.getElementById('msgsubject').value = regulartitle;
-	
-//msgsubject
-
+    function getit() {
+        var storedValue = localStorage.getItem("RTrackeradd");
+        document.forms[0].address.value = storedValue;
+        var storedValue = localStorage.getItem("RTrackerloc");
+        document.forms[0].Location.value = storedValue;
+        var storedValue = localStorage.getItem("RTrackertitle");
+        document.forms[0].EventTitle.value = storedValue;
+        var regulartitle = document.getElementById('EventTitle').value + ' [Track Times at]: ' + document.getElementById('Location').value;
+        document.getElementById('msgsubject').value = regulartitle;
+        document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
     }
 
-	
-
-	function getit() {
-
-	var storedValue = localStorage.getItem("RTrackeradd");
-
-document.forms[0].address.value = storedValue;
-
-	var storedValue = localStorage.getItem("RTrackerloc");
-	document.forms[0].Location.value = storedValue;
-	var storedValue = localStorage.getItem("RTrackertitle");
-	document.forms[0].EventTitle.value = storedValue;
-
-var regulartitle  = document.getElementById('EventTitle').value + ' [Track Times at]: ' +  document.getElementById('Location').value;
-	document.getElementById('msgsubject').value = regulartitle;
-document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
-
-
-	}
-
-function ClearForm() {
-
-  document.forms[0].TheData.value= "";
-
-  document.forms[0].msgsubject.value= "";
-  document.getElementById("RiderNum").focus();
-  document.getElementById("Inbtn").disabled = false;
-
-document.getElementById("Outbtn").disabled = false;
-
-document.getElementById("Dropbtn").disabled = false;
-document.getElementById("RiderNum").disabled = false; 
-document.getElementById("numlines").disabled = false; 
-
-document.getElementById("numlines").value = '0'; 
-document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
-
-
-
-}
-function countLines2() { 
-delBlankLines2();
-var text1 = document.getElementById("TheData").value;
-var text2 = text1.replace(/\s+$/,"");
-var split = text2.split("\n") ;
-
-document.forms[0].numlines.value = split.length;
-
-document.getElementById("numlines").disabled=false; } 
-function rtrim(stringToTrim) {
-
-	return stringToTrim.replace(/\s+$/,"");
-
-}
-
-function delBlankLines2() {
-
- var stringArray = document.getElementById('TheData').value.split('\n');
-
- var temp = [""];
-
- var x = 0;
- for (var i = 0; i < stringArray.length; i++) {
-
-   if (stringArray[i].trim() != "") {
- temp[x] = stringArray[i];
-     x++;
-   }
- }
- temp = temp.join('\n');
-var lookfor = "//";
-var temp=temp.replace(/lookfor/gm, "/");
-
- document.getElementById('TheData').value = temp+'\n';
-
-}
-function delBlankLines() {
-
- var stringArray = document.getElementById('TheData').value.split('\n');
-
- var temp = [""];
-
- var x = 0;
- for (var i = 0; i < stringArray.length; i++) {
-
-   if (stringArray[i].trim() != "") {
-
-     temp[x] = stringArray[i];
-
-     x++;
-
-   }
-
- }
- temp = temp.join('\n');
-var lookfor = "//";
-var temp=temp.replace(/lookfor/gm, "/");
-
- document.getElementById('TheData').value = temp;
-
-}
-
-function DoConfirm() {
-Thelocation= document.getElementById('Location').value;
-if (Thelocation.length <1) {
-alert('Error: You must add an "Aid/Check Point" ');document.getElementById('Location').focus();} 
-
-else {
-  if (confirm("Format Times for UltraLive?")) {
-replaceit (); }
-}
-  
-  }
-  
-  function Docleardata() {
-  if (confirm("Clear all participant data?")) {
-ClearForm();
-  } 
-  }
-
-function undoformatting () {
-var str= document.getElementById("TheData").value
- var n = str.search('BEGIN');
-  if (n <0) {alert('The data has not been formatted for ultralive\nClick \'Format Message for UltraLive (optional)\' button first.')
-    return false;}
-	else{
-  if (confirm(" Undo UltraLive formatting?")) {
-document.getElementById("TheData").value = document.getElementById("beforeformatting").value;
-document.getElementById("Inbtn").disabled = false;
-document.getElementById("Outbtn").disabled = false;
-document.getElementById("Dropbtn").disabled = false;
-document.getElementById("RiderNum").disabled = false; 
-var regulartitle  = document.getElementById('EventTitle').value + ' Tracking Times at ' +  document.getElementById('Location').value
-
-document.getElementById('msgsubject').value = regulartitle;
-document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
-
-}
-else {   return false;}
-}
-}
-
-function putTime() {
-document.getElementById("Timefld").value = RunnerTime();
-}
-
-function  replaceit ()
-{
-document.getElementById("beforeformatting").value = document.getElementById("TheData").value;
-var addtag = "/IN";
-
-// Subject:<var EventTitle> Tracking Times at <var Location>
-delBlankLines ();
-var regulartitle  = document.getElementById('EventTitle').value + ' Tracking Times at ' +  document.getElementById('Location').value
-//var addtag = document.getElementById('InOutFld').value;
-
-
-var d = new Date();
-
-var themonth = d.getMonth();
-
-themonth = themonth+1;
-
-var mday = d.getDate();
-
-var dd = String(mday);
-
-var myday = dd;
-
-if (dd.length <2) 
-
-{myday= "0"+dd;}
-
-var mm = String(themonth);
-
-mymonth= mm;
-
-if (mm.length <2) 
-
-{  mymonth = "0"+mm;} 
-var theaddress = document.forms[0].address.value;
-
-document.forms[0].sendto.value = theaddress;
-
-var location=document.forms[0].Location.value;
-
-var AddSubject=true;
-
-var thelocation = location;
-
-var location = "BEGIN " + location;
-
-var str1=document.forms[0].TheData.value;
-var str1 = str1.replace(/\t/g,"/");
-var str1 = str1.replace(/:/g,"");
-var str1 = str1.replace(/ /g,"");
-var str = rtrim (str1);
-
-var mystring = str;
-
-var FirstTime = str;
-
-var allofit;
-
-allofit = "";
-var nostatus = false;
-
-if (nostatus ==  false) 
-
-{FirstTime = mystring.split("/",2); }
-
-// added code
-
-var FirstTime=str.split("/",2);
-
-var sstr = FirstTime;
-
-var FirstTime=sstr[1].split(/\n/,1);
-junk = FirstTime;
-junka= String(junk);
-//junka = String(FirstTime.length;
-if (junka.length <4) 
-{  FirstTime = "0"+FirstTime;} 
-//alert(FirstTime);
-// now check for 3 digit times
-
-var tfix;
-
-  var lines = str.split("\n");
-
-
-  for(var i=0; i<lines.length; i++) {
-
-//  var addtag = document.getElementById('InOutFld').value;
-
- if (lines[i] != ""){
-//Check for last/
-var fixthis = lines[i];
-var stringLength = fixthis.length;
-var lastChar = fixthis.charAt(stringLength - 1);
-
-if (lastChar == "/") { fixthis= fixthis.substr(0,stringLength-1);
-}
-lines[i] = fixthis ;
-  	var mtime = lines[i].split("/",3); 
-//alert (mtime);
-  	var tempsplit = lines[i].split("/",3);
-
-  // catch error
-try {  	if(mtime[1].length <4 ){lines[i] = mtime[0]+"/" + "0"+mtime[1] };}
-catch(err) {
- alert('Invalid data entry.\nCorrect format is Bib#/Time/Status\nin line -->'+fixthis + '<--');
-   return false;
-}
-	//try this
-	//if (tempsplit[2].length >0) { lines[i] = lines[i] +"/"+tempsplit[2];}
-	//if(mtime[1].length <4 ){lines[i] = mtime[0]+"/" + "0"+mtime[1] }
-
-  //lines[i]
-
- // if (tempsplit[2] == '-' || tempsplit[2] == '+' || tempsplit[2] == '*') {lines[i] = tempsplit[0]+"/" + tempsplit[1]+"/" + tempsplit[2];} else{ lines[i] = lines[i] +addtag;}  }
-  
-  var teststr = tempsplit[2];
-  
-
-  if (mtime[2] == '-' || mtime[2] == '+' || mtime[2] == '*' || mtime[2] !== undefined) {lines[i] = mtime[0]+"/" + mtime[1]+"/" + mtime[2];} else
-  { 
-  
-  
-  lines[i] = lines[i] +addtag;
-  }  }
-
-// try agin
-   var mtime = lines[i].split("/",3); 
-   
-	if(mtime[1].length <4 ){lines[i] = mtime[0]+"/" + "0"+mtime[1]+"/"+ mtime[2] };
-  }
-
-n = lines.join("\n");
-
-var lookfor = "//";
-var n=n.replace(/\/\//gm, "/");
-
-var n= n.replace(/\+/gm, "IN");
-
-var n=n.replace(/\-/gm, "OUT");
-//var n=n.replace(/\*/gm, "DROP");
-
-expand = false
-var msg = location+"\r"+mymonth+myday+"\r"+n+"\r"+"END" ;
-
-var msubject = "DATA "+ thelocation +" "+ FirstTime;
-
-if (AddSubject == true) { "\r" + msg;}
-
-document.forms[0].TheData.value = msg;
-
-delBlankLines ();
-
-document.forms[0].msgsubject.value = msubject;
-// document.forms[0].sendto.focus(); 
-
-// document.forms[0].sendto.select();
-document.getElementById("Inbtn").disabled = true;
-
-document.getElementById("Outbtn").disabled = true;
-
-document.getElementById("Dropbtn").disabled = true;
-document.getElementById("RiderNum").disabled = true; 
-document.getElementById('FormatNote').value = "* The entries in this email have been formatted for use with Ultralive."
-
-
-}
-
-
-function SelectTheText(fieldName){ 
-
-{
-
-document.forms[0].sendto.focus(); 
-
-document.forms[0].sendto.select();
-}
-
-} 
+    function ClearForm() {
+
+        document.forms[0].TheData.value = "";
+
+        document.forms[0].msgsubject.value = "";
+        document.getElementById("RiderNum").focus();
+        document.getElementById("Inbtn").disabled = false;
+
+        document.getElementById("Outbtn").disabled = false;
+
+        document.getElementById("Dropbtn").disabled = false;
+        document.getElementById("RiderNum").disabled = false;
+        document.getElementById("numlines").disabled = false;
+
+        document.getElementById("numlines").value = '0';
+        document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
+    }
+
+    function countLines2() {
+        delBlankLines2();
+        var text1 = document.getElementById("TheData").value;
+        var text2 = text1.replace(/\s+$/, "");
+        var split = text2.split("\n");
+
+        document.forms[0].numlines.value = split.length;
+
+        document.getElementById("numlines").disabled = false;
+    }
+
+    function rtrim(stringToTrim) {
+        return stringToTrim.replace(/\s+$/, "");
+    }
+
+    function delBlankLines2() {
+        var stringArray = document.getElementById('TheData').value.split('\n');
+        var temp = [""];
+        var x = 0;
+
+        for (var i = 0; i < stringArray.length; i++) {
+
+            if (stringArray[i].trim() != "") {
+                temp[x] = stringArray[i];
+                x++;
+            }
+        }
+
+        temp = temp.join('\n');
+        var lookfor = "//";
+        var temp = temp.replace(/lookfor/gm, "/");
+        document.getElementById('TheData').value = temp + '\n';
+    }
+
+    function delBlankLines() {
+        var stringArray = document.getElementById('TheData').value.split('\n');
+        var temp = [""];
+        var x = 0;
+
+        for (var i = 0; i < stringArray.length; i++) {
+
+            if (stringArray[i].trim() != "") {
+                temp[x] = stringArray[i];
+                x++;
+            }
+        }
+
+        temp = temp.join('\n');
+        var lookfor = "//";
+        var temp = temp.replace(/lookfor/gm, "/");
+        document.getElementById('TheData').value = temp;
+    }
+
+    function DoConfirm() {
+        Thelocation = document.getElementById('Location').value;
+        if (Thelocation.length < 1) {
+            alert('Error: You must add an "Aid/Check Point" '); document.getElementById('Location').focus();
+        }
+
+        else {
+            if (confirm("Format Times for UltraLive?")) {
+                replaceit();
+            }
+        }
+    }
+    
+    function Docleardata() {
+        if (confirm("Clear all participant data?")) {
+            ClearForm();
+        }
+    }
+
+    function undoformatting() {
+        var str = document.getElementById("TheData").value
+        var n = str.search('BEGIN');
+        if (n < 0) {
+            alert('The data has not been formatted for ultralive\nClick \'Format Message for UltraLive (optional)\' button first.')
+            return false;
+        }
+        else {
+            if (confirm(" Undo UltraLive formatting?")) {
+                document.getElementById("TheData").value = document.getElementById("beforeformatting").value;
+                document.getElementById("Inbtn").disabled = false;
+                document.getElementById("Outbtn").disabled = false;
+                document.getElementById("Dropbtn").disabled = false;
+                document.getElementById("RiderNum").disabled = false;
+                var regulartitle = document.getElementById('EventTitle').value + ' Tracking Times at ' + document.getElementById('Location').value
+                document.getElementById('msgsubject').value = regulartitle;
+                document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
+
+            }
+            else {
+                return false;
+            }
+        }
+    }
+
+    function putTime() {
+        document.getElementById("Timefld").value = RunnerTime();
+    }
+
+    function replaceit() {
+        document.getElementById("beforeformatting").value = document.getElementById("TheData").value;
+        var addtag = "/IN";
+
+        // Subject:<var EventTitle> Tracking Times at <var Location>
+        delBlankLines();
+        var regulartitle = document.getElementById('EventTitle').value + ' Tracking Times at ' + document.getElementById('Location').value
+        var d = new Date();
+        var themonth = d.getMonth();
+        themonth = themonth + 1;
+        var mday = d.getDate();
+        var dd = String(mday);
+        var myday = dd;
+        if (dd.length < 2) { myday = "0" + dd; }
+        var mm = String(themonth);
+        mymonth = mm;
+        if (mm.length < 2) { mymonth = "0" + mm; }
+        var theaddress = document.forms[0].address.value;
+        document.forms[0].sendto.value = theaddress;
+        var location = document.forms[0].Location.value;
+        var AddSubject = true;
+        var thelocation = location;
+        var location = "BEGIN " + location;
+        var str1 = document.forms[0].TheData.value;
+        var str1 = str1.replace(/\t/g, "/");
+        var str1 = str1.replace(/:/g, "");
+        var str1 = str1.replace(/ /g, "");
+        var str = rtrim(str1);
+        var mystring = str;
+        var FirstTime = str;
+        var allofit;
+        allofit = "";
+        var nostatus = false;
+
+        if (nostatus == false) {
+            FirstTime = mystring.split("/", 2);
+        }
+
+        // added code
+        var FirstTime = str.split("/", 2);
+        var sstr = FirstTime;
+        var FirstTime = sstr[1].split(/\n/, 1);
+        junk = FirstTime;
+        junka = String(junk);
+
+        if (junka.length < 4) {
+            FirstTime = "0" + FirstTime;
+        }
+
+        // now check for 3 digit times
+        var tfix;
+        var lines = str.split("\n");
+
+        for (var i = 0; i < lines.length; i++) {
+
+            if (lines[i] != "") {
+                //Check for last/
+                var fixthis = lines[i];
+                var stringLength = fixthis.length;
+                var lastChar = fixthis.charAt(stringLength - 1);
+
+                if (lastChar == "/") {
+                    fixthis = fixthis.substr(0, stringLength - 1);
+                }
+
+                lines[i] = fixthis;
+                var mtime = lines[i].split("/", 3);
+                var tempsplit = lines[i].split("/", 3);
+
+                try {
+                    if (mtime[1].length < 4) { lines[i] = mtime[0] + "/" + "0" + mtime[1] };
+                }
+                catch (err) {
+                    alert('Invalid data entry.\nCorrect format is Bib#/Time/Status\nin line -->' + fixthis + '<--');
+                    return false;
+                }
+                var teststr = tempsplit[2];
+                if (mtime[2] == '-' || mtime[2] == '+' || mtime[2] == '*' || mtime[2] !== undefined) {
+                    lines[i] = mtime[0] + "/" + mtime[1] + "/" + mtime[2];
+                }
+                else {
+
+                    lines[i] = lines[i] + addtag;
+                }
+            }
+
+            // try agin
+            var mtime = lines[i].split("/", 3);
+            if (mtime[1].length < 4) { lines[i] = mtime[0] + "/" + "0" + mtime[1] + "/" + mtime[2] };
+        }
+
+        n = lines.join("\n");
+        var lookfor = "//";
+        var n = n.replace(/\/\//gm, "/");
+        var n = n.replace(/\+/gm, "IN");
+        var n = n.replace(/\-/gm, "OUT");
+
+        //TODO: check out the commented-out DROP code
+        //var n=n.replace(/\*/gm, "DROP");
+
+        expand = false
+        var msg = location + "\r" + mymonth + myday + "\r" + n + "\r" + "END";
+        var msubject = "DATA " + thelocation + " " + FirstTime;
+        if (AddSubject == true) { "\r" + msg; }
+        document.forms[0].TheData.value = msg;
+        delBlankLines();
+        document.forms[0].msgsubject.value = msubject;
+        document.getElementById("Inbtn").disabled = true;
+        document.getElementById("Outbtn").disabled = true;
+        document.getElementById("Dropbtn").disabled = true;
+        document.getElementById("RiderNum").disabled = true;
+        document.getElementById('FormatNote').value = "* The entries in this email have been formatted for use with Ultralive."
+    }
+
+
+    function SelectTheText(fieldName) {
+        document.forms[0].sendto.focus();
+        document.forms[0].sendto.select();
+    }
 
 /* ************************************************* */
 
+    function RunnerTime(RightNow) {
+        var txt;
+        var d = new Date(),
+            thisyear = d.getFullYear();
+        thismonth = d.getMonth();
+        thismonth = thismonth + 1;
 
-/* ************************************************* */
+        if (thismonth < 10) {
+            thismonth = "0" + thismonth
+        }
 
-//--> 
+        thisday = d.getDate();
+        if (thisday < 10) {
+            thisday = "0" + thisday
+        }
 
-function RunnerTime (RightNow) {
-var txt;
-var d = new Date(),
-thisyear = d.getFullYear();
-thismonth= d.getMonth();
-thismonth = thismonth+1;
-if (thismonth < 10) { thismonth = "0" + thismonth}
+        h = (d.getHours() < 10 ? '0' : '') + d.getHours()
+        m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes()
+        var myprompt = h + ':' + m;
+        return myprompt;
+    }
 
-thisday = d.getDate();
-if (thisday < 10) { thisday = "0" + thisday}
-
-h = (d.getHours()<10?'0':'') + d.getHours()
-m = (d.getMinutes()<10?'0':'') + d.getMinutes()
-var myprompt = h + ':' + m ;
-return myprompt;
-}
-
-function isObject(arg) {
-  return Object.prototype.toString.call(arg)==='[object Object]';
-}
+    function isObject(arg) {
+        return Object.prototype.toString.call(arg) === '[object Object]';
+    }
 
     function AddIn() {
         temp = document.getElementById("RiderNum").value;
+
         if (temp.length > 0) {
             temp = rtrim(temp);
             var temp = temp.replace(/ /g, "");
             var TheRunner = temp;
             var TheTime = document.getElementById("Timefld").value;
-            if (TheTime.length < 4) { TheTime = "0" + TheTime; }
-            if (TheTime.search(":") < 0) { TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join(''); }
+
+            if (TheTime.length < 4) {
+                TheTime = "0" + TheTime;
+            }
+
+            if (TheTime.search(":") < 0) {
+                TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join('');
+            }
 
             var theDate = new Date();
             toDay = theDate.getDate();
             dayOfMonth = String(toDay);
+
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
             }
@@ -413,22 +341,30 @@ function isObject(arg) {
         } else {
             alert('Enter Runner/Bib number');
             document.getElementById("RiderNum").focus();
-
         }
     }
+
     function AddOut() {
         temp = document.getElementById("RiderNum").value;
+
         if (temp.length > 0) {
             temp = rtrim(temp);
             var temp = temp.replace(/ /g, "");
             var TheRunner = temp;
             var TheTime = document.getElementById("Timefld").value;
-            if (TheTime.length < 4) { TheTime = "0" + TheTime; }
-            if (TheTime.search(":") < 0) { TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join(''); }
+
+            if (TheTime.length < 4) {
+                TheTime = "0" + TheTime;
+            }
+
+            if (TheTime.search(":") < 0) {
+                TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join('');
+            }
 
             var theDate = new Date();
             toDay = theDate.getDate();
             dayOfMonth = String(toDay);
+
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
             }
@@ -443,35 +379,40 @@ function isObject(arg) {
         } else {
             alert('Enter Runner/Bib number');
             document.getElementById("RiderNum").focus();
-
         }
     }
 
-function moveCursorToEnd(obj) {
+    function moveCursorToEnd(obj) {
 
-  if (!(obj.updating)) {
-    obj.updating = true;
-    var oldValue = obj.value;
-    obj.value = '';
-    setTimeout(function(){ obj.value = oldValue; obj.updating = false; }, 100);
-  }
-
-}
+        if (!(obj.updating)) {
+            obj.updating = true;
+            var oldValue = obj.value;
+            obj.value = '';
+            setTimeout(function () { obj.value = oldValue; obj.updating = false; }, 100);
+        }
+    }
 
     function AddDrop() {
         temp = document.getElementById("RiderNum").value;
-        if (temp.length > 0) {
 
+        if (temp.length > 0) {
             temp = rtrim(temp);
             var temp = temp.replace(/ /g, "");
             var TheRunner = temp;
             var TheTime = document.getElementById("Timefld").value;
-            if (TheTime.length < 4) { TheTime = "0" + TheTime; }
-            if (TheTime.search(":") < 0) { TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join(''); }
+
+            if (TheTime.length < 4) {
+                TheTime = "0" + TheTime;
+            }
+
+            if (TheTime.search(":") < 0) {
+                TheTime = [TheTime.slice(0, 2), ':', TheTime.slice(2)].join('');
+            }
 
             var theDate = new Date();
             toDay = theDate.getDate();
             dayOfMonth = String(toDay);
+
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
             }
@@ -486,303 +427,284 @@ function moveCursorToEnd(obj) {
         } else {
             alert('Enter Runner/Bib number');
             document.getElementById("RiderNum").focus();
-
         }
     }
 
     function FormatBibRecord(pTime, tRunner, action, tTime, doM, loc) {
-        return pTime + tRunner + "\t" + action + "\t" + tTime + "\t" + doM + "\t"  + loc + "\n";
+        return pTime + tRunner + "\t" + action + "\t" + tTime + "\t" + doM + "\t" + loc + "\n";
     }
-function Sortit(){
-var myString = document.getElementById("TheData").value;
 
-orderString(myString);
+    function Sortit() {
+        //  TODO: verify functionality now that orderstring has been refactored out of this function
+        var myString = document.getElementById("TheData").value;
+        orderString(myString);
+    }
 
-function orderString(str) {
-    var i = 0;
-    var myArray = str.split('\n');
-    while (i < str.length){
-        var j = i + 1;
-        while (j < str.length) {
-            if (myArray[j] < myArray[i]){
-                var temp = myArray[i];
-                myArray[i] = myArray[j];
-                myArray[j] = temp;
+    function orderString(str) {
+        //  TODO: orderString used to be enclosed in Sortit so test this refactored version somehow
+        var i = 0;
+        var myArray = str.split('\n');
+        while (i < str.length) {
+            var j = i + 1;
+            while (j < str.length) {
+                if (myArray[j] < myArray[i]) {
+                    var temp = myArray[i];
+                    myArray[i] = myArray[j];
+                    myArray[j] = temp;
+                }
+                j++;
             }
-            j++;
+            i++;
         }
-        i++;
+        var newString = myArray.join('\n');
+        document.getElementById("TheData").value = newString;
     }
-    var newString = myArray.join('\n');
-    document.getElementById("TheData").value= newString;
-}
-}
 
-function AutoGrowTextArea(textField){
-//alert (textField.clientHeight );
-//textField.style.height = textField.scrollHeight + "px";
-if (textField.clientHeight < textField.scrollHeight)
-{
-textField.style.height = (textField.scrollHeight * 2 - textField.clientHeight) + "px";
-}
-}
+    function AutoGrowTextArea(textField) {
 
-function Countthelines(f) { var text1 = f;
-
-var text2 = text1.replace(/\s+$/,"");
-var split2 = text2.split("\n"); 
-var ar = text2.length /100;
-var mytotal = (split2.length+ar) * 15.5;
-
-
-//var mytotal = split2.length * 15.5;
-//alert("#lines "+mytotal)
-//if (mytotal < 300) {
-//mytotal = 150;
-//}
-var tstr = mytotal.toString();
-return tstr;
-}
-function newfix(f){
-var ThisText = document.getElementById(f).value;
-var makeit = Countthelines(ThisText);
-
-document.getElementById(f).style.height = makeit+"px"; 
-
-}
-
-function setfocus (){
-document.getElementById('Timefld').focus();
-return false;
-}
-
-
-function saveTextAsFile(fileNameToSaveAs, textToWrite) {
-var textToWrite = document.getElementById('parseme').value; 
-var fileNameToSaveAs = "Race Tracking data " + DateforFile()+".txt";
-fileNameToSaveAs = prompt("", fileNameToSaveAs);
-
-  /* Saves a text string as a blob file*/  
-  var ie = navigator.userAgent.match(/MSIE\s([\d.]+)/),
-      ie11 = navigator.userAgent.match(/Trident\/7.0/) && navigator.userAgent.match(/rv:11/),
-      ieEDGE = navigator.userAgent.match(/Edge/g),
-      ieVer=(ie ? ie[1] : (ie11 ? 11 : (ieEDGE ? 12 : -1)));
-
-  if (ie && ieVer<10) {
-    console.log("No blobs on IE ver<10");
-    return;
-  }
-
-  var textFileAsBlob = new Blob([textToWrite], {
-    type: 'text/plain'
-  });
-
-  if (ieVer>-1) {
-    window.navigator.msSaveBlob(textFileAsBlob, fileNameToSaveAs);
-
-  } else {
-    var downloadLink = document.createElement("a");
-    downloadLink.download = fileNameToSaveAs;
-    downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-    downloadLink.onclick = function(e) { document.body.removeChild(e.target); };
-    downloadLink.style.display = "none";
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-  }
-}
-
-
-
-
-
-function destroyClickedElement(event)
-{
-    document.body.removeChild(event.target);
-}
-
-function loadFileAsText()
-{
-
-    var fileToLoad = document.getElementById("fileToLoad").files[0];
- 
-    var fileReader = new FileReader();
-    fileReader.onload = function(fileLoadedEvent) 
-    {
-        var textFromFileLoaded = fileLoadedEvent.target.result;
-        document.getElementById("inputTextToSave").value = textFromFileLoaded;
-    };
-    fileReader.readAsText(fileToLoad, "UTF-8");
-}
-
-
-function DateforFile(RightNow) {
-var txt;
-var d = new Date(),
-thisyear = d.getFullYear();
-thismonth= d.getMonth();
-thismonth = thismonth+1;
-if (thismonth < 10) { thismonth = "0" + thismonth}
-
-thisday = d.getDate();
-if (thisday < 10) { thisday = "0" + thisday}
-
-h = (d.getHours()<10?'0':'') + d.getHours()
-m = (d.getMinutes()<10?'0':'') + d.getMinutes()
-var myprompt = thisyear+ '-'+thismonth+'-'+thisday+' '+h + '_' + m ;
-return myprompt;
-}
-
-function isObject(arg) {
-  return Object.prototype.toString.call(arg)==='[object Object]';
-}
-
-function formDataToObject(elForm) {
-  if (!elForm instanceof Element) return;
-  var fields = elForm.querySelectorAll('input, select, textarea'),
-    o = {};
-  for (var i=0, imax=fields.length; i<imax; ++i) {
-    var field = fields[i],
-      sKey = field.name || field.id;
-    if (field.type==='button' || field.type==='image' || field.type==='submit' || !sKey) continue;
-    switch (field.type) {
-      case 'checkbox':
-        o[sKey] = +field.checked;
-        break;
-      case 'radio':
-        if (o[sKey]===undefined) o[sKey] = '';
-        if (field.checked) o[sKey] = field.value;
-        break;
-      case 'select-multiple':
-        var a = [];
-        for (var j=0, jmax=field.options.length; j<jmax; ++j) {
-          if (field.options[j].selected) a.push(field.options[j].value);
+        if (textField.clientHeight < textField.scrollHeight) {
+            textField.style.height = (textField.scrollHeight * 2 - textField.clientHeight) + "px";
         }
-        o[sKey] = a;
-        break;
-      default:
-        o[sKey] = field.value;
     }
-  }
- // alert('Form data:\n\n' + JSON.stringify(o, null, 2));
- document.getElementById('parseme').value = JSON.stringify(o, null, 2);
-//  return o;
-}
 
-function populateForm(o) {
+    function Countthelines(f) {
+        var text1 = f;
+        var text2 = text1.replace(/\s+$/, "");
+        var split2 = text2.split("\n");
+        var ar = text2.length / 100;
+        var mytotal = (split2.length + ar) * 15.5;
+        var tstr = mytotal.toString();
+        return tstr;
+    }
 
-o =  JSON.parse(document.getElementById('parseme').value);
- //if (!isObject(o)) return;
-if (!isObject(o)) return;
-  for (var i in o) {
-    var el = document.getElementById(i) || document.querySelector('[name=' + i + ']');
-    if (el.type==='radio') el = document.querySelectorAll('[name=' + i + ']');
-    switch (typeof o[i]) {
-      case 'number':
-        el.checked = o[i];
-        break;
-      case 'object':
-        if (el.options && o[i] instanceof Array) {
-          for (var j=0, jmax=el.options.length; j<jmax; ++j) {
-            if (o[i].indexOf(el.options[j].value)>-1) el.options[j].selected = true;
-          }
+    function newfix(f) {
+        var ThisText = document.getElementById(f).value;
+        var makeit = Countthelines(ThisText);
+        document.getElementById(f).style.height = makeit + "px";
+    }
+
+    function setfocus() {
+        document.getElementById('Timefld').focus();
+        return false;
+    }
+
+    function saveTextAsFile(fileNameToSaveAs, textToWrite) {
+        var textToWrite = document.getElementById('parseme').value;
+        var fileNameToSaveAs = "Race Tracking data " + DateforFile() + ".txt";
+        fileNameToSaveAs = prompt("", fileNameToSaveAs);
+
+        /* Saves a text string as a blob file*/
+        var ie = navigator.userAgent.match(/MSIE\s([\d.]+)/),
+            ie11 = navigator.userAgent.match(/Trident\/7.0/) && navigator.userAgent.match(/rv:11/),
+            ieEDGE = navigator.userAgent.match(/Edge/g),
+            ieVer = (ie ? ie[1] : (ie11 ? 11 : (ieEDGE ? 12 : -1)));
+
+        if (ie && ieVer < 10) {
+            console.log("No blobs on IE ver<10");
+            return;
         }
-        break;
-      default:
-        if (el instanceof NodeList) {
-          for (var j=0, jmax=el.length; j<jmax; ++j) {
-            if (el[j].value===o[i]) el[j].checked = true;
-          }
+
+        var textFileAsBlob = new Blob([textToWrite], {
+            type: 'text/plain'
+        });
+
+        if (ieVer > -1) {
+            window.navigator.msSaveBlob(textFileAsBlob, fileNameToSaveAs);
+
         } else {
-          el.value = o[i];
+            var downloadLink = document.createElement("a");
+            downloadLink.download = fileNameToSaveAs;
+            downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+            downloadLink.onclick = function (e) { document.body.removeChild(e.target); };
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
         }
     }
-  }
-    getit();
-	Fixfields();
 
+    function destroyClickedElement(event) {
+        document.body.removeChild(event.target);
+    }
 
-}
+    function loadFileAsText() {
+        var fileToLoad = document.getElementById("fileToLoad").files[0];
+        var fileReader = new FileReader();
 
-function SaveData() {
-	
-			formDataToObject(document.getElementById('myform'))
-			saveTextAsFile();
-			
-			//saveTextAsFile();
-			}
+        fileReader.onload = function (fileLoadedEvent) {
+            var textFromFileLoaded = fileLoadedEvent.target.result;
+            document.getElementById("inputTextToSave").value = textFromFileLoaded;
+        };
+
+        fileReader.readAsText(fileToLoad, "UTF-8");
+    }
+
+    function DateforFile(RightNow) {
+        var txt;
+        var d = new Date(),
+            thisyear = d.getFullYear();
+        thismonth = d.getMonth();
+        thismonth = thismonth + 1;
+
+        if (thismonth < 10) {
+            thismonth = "0" + thismonth
+        }
+
+        thisday = d.getDate();
+
+        if (thisday < 10) {
+            thisday = "0" + thisday
+        }
+
+        h = (d.getHours() < 10 ? '0' : '') + d.getHours()
+        m = (d.getMinutes() < 10 ? '0' : '') + d.getMinutes()
+        var myprompt = thisyear + '-' + thismonth + '-' + thisday + ' ' + h + '_' + m;
+        return myprompt;
+    }
+
+    function isObject(arg) {
+        return Object.prototype.toString.call(arg) === '[object Object]';
+    }
+
+    function formDataToObject(elForm) {
+        if (!elForm instanceof Element) return;
+        var fields = elForm.querySelectorAll('input, select, textarea'),
+            o = {};
+        for (var i = 0, imax = fields.length; i < imax; ++i) {
+            var field = fields[i],
+                sKey = field.name || field.id;
+
+            if (field.type === 'button' || field.type === 'image' || field.type === 'submit' || !sKey) continue;
+
+            switch (field.type) {
+                case 'checkbox':
+                    o[sKey] = +field.checked;
+                    break;
+                case 'radio':
+                    if (o[sKey] === undefined) o[sKey] = '';
+                    if (field.checked) o[sKey] = field.value;
+                    break;
+                case 'select-multiple':
+                    var a = [];
+                    for (var j = 0, jmax = field.options.length; j < jmax; ++j) {
+                        if (field.options[j].selected) a.push(field.options[j].value);
+                    }
+                    o[sKey] = a;
+                    break;
+                default:
+                    o[sKey] = field.value;
+            }
+        }
+
+        document.getElementById('parseme').value = JSON.stringify(o, null, 2);
+    }
+
+    function populateForm(o) {
+
+        o = JSON.parse(document.getElementById('parseme').value);
+
+        if (!isObject(o)) return;
+
+        for (var i in o) {
+            var el = document.getElementById(i) || document.querySelector('[name=' + i + ']');
+            if (el.type === 'radio') el = document.querySelectorAll('[name=' + i + ']');
+
+            switch (typeof o[i]) {
+                case 'number':
+                    el.checked = o[i];
+                    break;
+                case 'object':
+                    if (el.options && o[i] instanceof Array) {
+                        for (var j = 0, jmax = el.options.length; j < jmax; ++j) {
+                            if (o[i].indexOf(el.options[j].value) > -1) el.options[j].selected = true;
+                        }
+                    }
+                    break;
+                default:
+                    if (el instanceof NodeList) {
+                        for (var j = 0, jmax = el.length; j < jmax; ++j) {
+                            if (el[j].value === o[i]) el[j].checked = true;
+                        }
+                    } else {
+                        el.value = o[i];
+                    }
+            }
+        }
+
+        getit();
+        Fixfields();
+    }
+
+    function SaveData() {
+        formDataToObject(document.getElementById('myform'))
+        saveTextAsFile();
+    }
 
 //-------
- function readBlob(opt_startByte, opt_stopByte) {
-  
-    var files = document.getElementById('files').files;
-    if (!files.length) {
-      alert('Please select a file!');
-      return;
+    function readBlob(opt_startByte, opt_stopByte) {
+        var files = document.getElementById('files').files;
+
+        if (!files.length) {
+            alert('Please select a file!');
+            return;
+        }
+
+        var file = files[0];
+        var start = parseInt(opt_startByte) || 0;
+        var stop = parseInt(opt_stopByte) || file.size - 1;
+        var reader = new FileReader();
+
+        // If we use onloadend, we need to check the readyState.
+        reader.onloadend = function (evt) {
+            if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+                document.getElementById('byte_content').textContent = evt.target.result;
+                document.getElementById('byte_range').textContent =
+                    ['Read bytes: ', start + 1, ' - ', stop + 1,
+                        ' of ', file.size, ' byte file'].join('');
+            }
+        };
+
+        var blob = file.slice(start, stop + 1);
+        reader.readAsBinaryString(blob);
     }
+    
+    window.onload = function () {
+        //Check the support for the File API support 
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+            var fileSelected = document.getElementById('txtfiletoread');
 
-    var file = files[0];
-    var start = parseInt(opt_startByte) || 0;
-    var stop = parseInt(opt_stopByte) || file.size - 1;
+            fileSelected.addEventListener('change', function (e) {
+                //Set the extension for the file 
+                var fileExtension = /text.*/;
+                //Get the file object 
+                var fileTobeRead = fileSelected.files[0];
+                //Check of the extension match 
+                if (fileTobeRead.type.match(fileExtension)) {
+                    //Initialize the FileReader object to read the 2file 
 
-    var reader = new FileReader();
+                    var fileReader = new FileReader();
+                    fileReader.onload = function (e) {
+                        var fileContents = document.getElementById('filecontents');
 
-    // If we use onloadend, we need to check the readyState.
-    reader.onloadend = function(evt) {
-      if (evt.target.readyState == FileReader.DONE) { // DONE == 2
-        document.getElementById('byte_content').textContent = evt.target.result;
-        document.getElementById('byte_range').textContent = 
-            ['Read bytes: ', start + 1, ' - ', stop + 1,
-             ' of ', file.size, ' byte file'].join('');
-      }
-    };
+                        document.getElementById('parseme').value = fileReader.result;
+                        populateForm(obj = document.getElementById('parseme').value);
+                    }
+                    fileReader.readAsText(fileTobeRead);
+                } else {
+                    alert("Please select text file");
+                }
 
-    var blob = file.slice(start, stop + 1);
-    reader.readAsBinaryString(blob);
-  }
-    	
-  window.onload = function () { 
- 
- //Check the support for the File API support 
- if (window.File && window.FileReader && window.FileList && window.Blob) {
-    var fileSelected = document.getElementById('txtfiletoread');
-	
-    fileSelected.addEventListener('change', function (e) { 
-         //Set the extension for the file 
-         var fileExtension = /text.*/; 
-         //Get the file object 
-         var fileTobeRead = fileSelected.files[0];
-        //Check of the extension match 
-         if (fileTobeRead.type.match(fileExtension)) { 
-             //Initialize the FileReader object to read the 2file 
-			
-             var fileReader = new FileReader(); 
-             fileReader.onload = function (e) { 
-                 var fileContents = document.getElementById('filecontents'); 
-                
-				document.getElementById('parseme').value =fileReader.result;
-				populateForm(obj = document.getElementById('parseme').value);
-					 } 
-             fileReader.readAsText(fileTobeRead); 
-         } 
-         else { 
-             alert("Please select text file"); 
-         }
- 
-    }, false);
-} 
- else { 
-     alert("Files are not supported"); 
- } 
- getit();
- Fixfields();
-// SetDateTime('autofulldatetime','DateTime');
- }
- 
- function Fixfields() { 
- AutoGrowTextArea(document.getElementById("TheData"));
+            }, false);
+        } else {
+            alert("Files are not supported");
+        }
 
-}
-
+        getit();
+        Fixfields();
+    }
+    
+    function Fixfields() {
+        AutoGrowTextArea(document.getElementById("TheData"));
+    }
 </script> 
 
 <style type="text/css">
@@ -1040,8 +962,8 @@ width: 110px;
 
 <table width="850" border="1" cellpadding="2" cellspacing="0" bordercolor="#999999">
   <tr>
-    <td width="842" height="882" valign="top" nowrap="nowrap"><h3 align="center" class="style8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span class="style21">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="style29">Race Tracker</span></span>&nbsp;&nbsp;<span class="style19">Ver. 3.2</span>&nbsp;
-        <input name="Theversion" type="hidden" id="Theversion" value="3.2" />
+    <td width="842" height="882" valign="top" nowrap="nowrap"><h3 align="center" class="style8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span class="style21">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="style29">Race Tracker</span></span>&nbsp;&nbsp;<span class="style19">Ver. 4.0 alpha</span>&nbsp;
+        <input name="Theversion" type="hidden" id="Theversion" value="4.0 alpha" />
 <small><b><big><span class="style13"><em><span class="style1"><small><b><big><em>&nbsp;&nbsp;<small><b><big><em>
 <input type="button" value="Form Information -  READ" 
 
@@ -1216,4 +1138,3 @@ to links</span></a> </div>
 
 </body>
 </html>
-

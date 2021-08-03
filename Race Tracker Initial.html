@@ -431,7 +431,13 @@
     }
 
     function FormatBibRecord(pTime, tRunner, action, tTime, doM, loc) {
-        return pTime + tRunner + "\t" + action + "\t" + tTime + "\t" + doM + "\t" + loc + "\n";
+        newTime = String(tTime);
+
+        if (tTime.indexOf(":") > -1) {
+            newTime = tTime.replace(":", "");
+        }
+
+        return pTime + tRunner + "\t" + action + "\t" + newTime + "\t" + doM + "\t" + loc + "\n";
     }
 
     function Sortit() {

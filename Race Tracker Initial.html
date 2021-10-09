@@ -983,8 +983,26 @@ onclick="location.href = '#pop1'" />
 </span></span></p>
         <p class="style13">&nbsp;   Send to:           
           <input name="address" type="text" id="address" onchange = "store();" size="50" maxlength="45"  title= "Seperate multiple calls or address's with a semicolon;" required placeholder = "Winlink Radio Call or Email"/>
-  &nbsp;Aid/Check Point:   
-  <input name="Location" type="text" id="Location" onchange="javascript:this.value=this.value.toUpperCase();xx=store();" size="25" required="required" maxlength="22" placeholder = "Call or Name" />
+  &nbsp;Aid Station:   
+          <select name="Location" type="text" id="Location" onchange="store();" size="3" required="required" maxlength="2">
+              <option value="FN" selected="selected">Marble Mountain SnoPark</option>
+              <option value="BL" selected="selected">Blue Lake</option>
+              <option value="WR" selected="selected">Windy Ridge</option>
+              <option value="JR" selected="selected">Johnston Ridge</option>
+              <option value="CW" selected="selected">Coldwater Lake</option>
+              <option value="NP" selected="selected">Norway Pass</option>
+              <option value="EP" selected="selected">Elk Pass</option>
+              <option value="WM" selected="selected">Wright Meadow (Rd.9327)</option>
+              <option value="SB" selected="selected">Spencer Butte</option>
+              <option value="LR" selected="selected">Lewis River</option>
+              <option value="QR" selected="selected">Quartz Ridge</option>
+              <option value="CB" selected="selected">Council Bluff</option>
+              <option value="CH" selected="selected">Chain of Lakes</option>
+              <option value="KT" selected="selected">Klickitat</option>
+              <option value="TS" selected="selected">Twisted Sister</option>
+              <option value="OC" selected="selected">Owen&acute;s Creek</option>
+              <option value="FN" selected="selected">Finish (Bigfoot Base)</option>
+          </select>
 &nbsp;<span class="style1"><span class="style8">        <input name="FormatNote" type="hidden" id="FormatNote" value="* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet." />
 
 </span></span> <em>&nbsp;&nbsp;&nbsp; <span class="style1"><span class="style8">

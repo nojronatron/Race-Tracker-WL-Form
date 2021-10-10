@@ -332,7 +332,12 @@
             }
 
             if (document.getElementById("yesterday").checked) {
-                dayOfMonth -= 1;
+                if (dayOfMonth == 1) {
+                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    dayOfMonth -= 1;
+                }
             }
 
             var Location = document.getElementById("Location").value;
@@ -372,6 +377,15 @@
 
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
+            }
+
+            if (document.getElementById("yesterday").checked) {
+                if (dayOfMonth == 1) {
+                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    dayOfMonth -= 1;
+                }
             }
 
             var Location = document.getElementById("Location").value;
@@ -421,6 +435,15 @@
 
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
+            }
+
+            if (document.getElementById("yesterday").checked) {
+                if (dayOfMonth == 1) {
+                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    dayOfMonth -= 1;
+                }
             }
 
             var Location = document.getElementById("Location").value;

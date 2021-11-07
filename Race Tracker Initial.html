@@ -331,11 +331,21 @@
                 dayOfMonth = "0" + dayOfMonth;
             }
 
+            if (document.getElementById("yesterday").checked) {
+                if (dayOfMonth == 1) {
+                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    dayOfMonth -= 1;
+                }
+            }
+
             var Location = document.getElementById("Location").value;
             var Previoustime = document.getElementById("TheData").value;
             document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "IN", TheTime, dayOfMonth, Location);
             document.getElementById("RiderNum").value = '';
             document.getElementById("Timefld").value = '';
+            yesterday.checked = false;
             document.getElementById("RiderNum").focus();
             countLines2();
         } else {
@@ -369,11 +379,21 @@
                 dayOfMonth = "0" + dayOfMonth;
             }
 
+            if (document.getElementById("yesterday").checked) {
+                if (dayOfMonth == 1) {
+                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    dayOfMonth -= 1;
+                }
+            }
+
             var Location = document.getElementById("Location").value;
             var Previoustime = document.getElementById("TheData").value;
             document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "OUT", TheTime, dayOfMonth, Location);
             document.getElementById("RiderNum").value = '';
             document.getElementById("Timefld").value = '';
+            yesterday.checked = false;
             document.getElementById("RiderNum").focus();
             countLines2();
         } else {
@@ -417,11 +437,21 @@
                 dayOfMonth = "0" + dayOfMonth;
             }
 
+            if (document.getElementById("yesterday").checked) {
+                if (dayOfMonth == 1) {
+                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    dayOfMonth -= 1;
+                }
+            }
+
             var Location = document.getElementById("Location").value;
             var Previoustime = document.getElementById("TheData").value;
             document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "DROP", TheTime, dayOfMonth, Location);
             document.getElementById("RiderNum").value = '';
             document.getElementById("Timefld").value = '';
+            yesterday.checked = false;
             document.getElementById("RiderNum").focus();
             countLines2();
         } else {
@@ -1019,7 +1049,7 @@ onclick="location.href = '#pop1'" />
           <input name="RiderNum" type="text" id="RiderNum" onkeypress="if(event.keyCode==13){a=setfocus(); return false;}" size="15" maxlength="13"  onblur="javascript:this.value=this.value.trim();this.value=this.value.toUpperCase(); putTime();" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Click box to add Time:
 <input name="Timefld" type="text" id="Timefld" style=" width: 50px;" onkeypress="if(event.keyCode==13){alert('Click: IN - OUT - DROP');return false;}" size="6" maxlength="6"  onblur=" this.value=this.value.trim(); " /> 
-&nbsp;<span class="style21">(you can accept or modify the time)</span></p>
+&nbsp;<span class="style21">(accept or modify the time)&emsp;<input type="checkbox" id="yesterday" name="yesterday" value="Yesterday" /><label for="yesterday">Check this box if time was yesterday.</label> </span></p>
         <hr />        <p align="left" class="style13">&nbsp;&nbsp;Now select ONE to create an Entry:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          <span class="style1">
           <input name="Inbtn" type="button" id="Inbtn" onclick="AddIn();" value="In" />
           </span><span class="style1">

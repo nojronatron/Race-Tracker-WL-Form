@@ -708,7 +708,6 @@
 
                     var fileReader = new FileReader();
                     fileReader.onload = function (e) {
-                        var fileContents = document.getElementById('filecontents');
 
                         document.getElementById('parseme').value = fileReader.result;
                         populateForm(obj = document.getElementById('parseme').value);
@@ -965,30 +964,39 @@ width: 110px;
 </style>
 
 </head> 
-<body > 
-<form  style="font-family: Arial;" pbzloc="3" onsubmit="return confirm('To complete your form submission, click OK and close the open browser window. You will return to the new message window so you can post your message to the outbox');" method="post" id="myform" enctype="multipart/form-data" action="http://{FormServer}:{FormPort}">
+<body>
 
-
-
+<form style="font-family: Arial;" pbzloc="3" onsubmit="return confirm('To complete your form submission, click OK and close the open browser window. You will return to the new message window so you can post your message to the outbox');" method="post" id="myform" enctype="multipart/form-data" action="http://{FormServer}:{FormPort}">
 
 <table width="850" border="1" cellpadding="2" cellspacing="0" bordercolor="#999999">
   <tr>
-    <td width="842" height="882" valign="top" nowrap="nowrap"><h3 align="center" class="style8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span class="style21">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="style29">Race Tracker</span></span>&nbsp;&nbsp;<span class="style19">Ver. 4.0 alpha</span>&nbsp;
+    <td width="842" height="882" valign="top" nowrap="nowrap">
+        <h3 align="center" class="style8">
+        <span class="style21">
+        <span class="style29">Race Tracker</span>
+        </span>
+        <span class="style19">Ver. 4.0 alpha</span>
         <input name="Theversion" type="hidden" id="Theversion" value="4.0 alpha" />
-<small><b><big><span class="style13"><em><span class="style1"><small><b><big><em>&nbsp;&nbsp;<small><b><big><em>
-<input type="button" value="Form Information -  READ" 
-
-onclick="location.href = '#pop1'" />
-</em></big></b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em></big></b></small>
-        <small><b><big><em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><b><big><em><small><b><big><em>&nbsp;&nbsp;</em></big></b></small></em></big></b></small><small><b><big><em><small><b><big><em>&nbsp;&nbsp;</em></big></b></small></em></big></b></small>&nbsp;&nbsp;&nbsp;</em></big></b></small><small><b><big><em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em></big></b></small>
-        </span></em></span> <small><b><big><span class="style13"><em><span class="style1"><small><b><big><em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em></big></b></small></span></em></span></big></b></small></big></b></small></h3>
-      <p class="style13"> &nbsp; Race/Event Name:            
-           <input name="EventTitle" type="text" id="EventTitle"  onchange = "store();" size="40" maxlength="35" required="required" placeholder="Races or Event Name"/> 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<span class="style1"><span class="style8">
-</span></span></p>
-        <p class="style13">&nbsp;   Send to:           
-          <input name="address" type="text" id="address" onchange = "store();" size="50" maxlength="45"  title= "Separate multiple calls or addresses with a semicolon;" required placeholder = "Winlink Radio Call or Email"/>
-  &nbsp;<label for="Location">Aid Station:</label>
+        <span class="style13">
+            <span class="style1">
+            <input type="button" value="Form Information -  READ" onclick="location.href = '#pop1'" />
+        </span>
+        </span>
+        <span class="style13">
+            <span class="style1">
+                </span>
+            </span>
+        </h3>
+      <p class="style13">Race/Event Name:
+        <input name="EventTitle" type="text" id="EventTitle"  onchange = "store();" size="40" maxlength="35" required="required" placeholder="Races or Event Name"/>
+        <span class="style1">
+          <span class="style8">
+              </span>
+            </span>
+        </p>
+        <p class="style13">Send to:
+        <input name="address" type="text" id="address" onchange="store();" size="50" maxlength="45"  title= "Separate multiple calls or addresses with a semicolon;" required placeholder="Winlink Radio Call or Email"/>
+        <label for="Location">Aid Station:</label>
           <select name="Location" type="text" id="Location" onchange="store();" size="3" required="required" maxlength="2">
               <option value="MM">Marble Mountain SnoPark</option>
               <option value="BL">Blue Lake</option>
@@ -1008,82 +1016,124 @@ onclick="location.href = '#pop1'" />
               <option value="OC">Owen&acute;s Creek</option>
               <option value="FN">Finish (Bigfoot Base)</option>
           </select>
-&nbsp;<span class="style1"><span class="style8">        <input name="FormatNote" type="hidden" id="FormatNote" value="* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet." />
-
-</span></span> <em>&nbsp;&nbsp;&nbsp; <span class="style1"><span class="style8">
-</span></span></em></p>
-        <p class="style13">&nbsp;&nbsp;Subject: <span class="style1"><span class="style8"> 
-        <input name="msgsubject" type="text"  id="msgsubject" readonly="readonly" size="60" maxlength="70" />
-&nbsp;</span></span><span class="style21">(subject is created for you with 1st entry)</span><span class="style1"><span class="style8"> &nbsp;&nbsp;</span></span></p>
-        <p class="style13"><span class="style1"><span class="style8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em class="style21 style9">The  entry boxes above will remain with what you enter the first time. You overwrite to change.</em> </span></span>
+        <span class="style1">
+            <span class="style8">
+            <input name="FormatNote" type="hidden" id="FormatNote" value="* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet." />
+                </span>
+            </span>
+        <span class="style1">
+            <span class="style8"></span>
+            </span>
+        <p class="style13">Subject:
+        <span class="style1">
+            <span class="style8"> 
+        <input name="msgsubject" type="text" id="msgsubject" readonly="readonly" size="60" maxlength="70" />
+            </span>
+            </span>
+        <span class="style21">(subject is created for you with 1st entry)</span>
+        <span class="style1">
+            <span class="style8"></span>
+            </span>
+        </p>
+        <p class="style13">
+            <span class="style1">
+            <span class="style8">
+                <em class="style21 style9">The  entry boxes above will remain with what you enter the first time. You overwrite to change.</em>
+                </span>
+            </span>
           <textarea name="beforeformatting" id="beforeformatting"  style="display: none;"></textarea>   
           <input type="file" id="txtfiletoread" accept=".txt"  style="display: none;"/>      
-            </p>
-        <hr />
-        <p align="left" class="style13"><span class="style14">&nbsp;</span><span class="style20">Bib or Rider #: </span> 
-          <input name="RiderNum" type="text" id="RiderNum" onkeypress="if(event.keyCode==13){a=setfocus(); return false;}" size="15" maxlength="13"  onblur="javascript:this.value=this.value.trim();this.value=this.value.toUpperCase(); putTime();" />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Click box to add Time:
-<input name="Timefld" type="text" id="Timefld" style=" width: 50px;" onkeypress="if(event.keyCode==13){alert('Click: IN - OUT - DROP');return false;}" size="6" maxlength="6"  onblur=" this.value=this.value.trim(); " /> 
-&nbsp;<span class="style21">(accept or modify the time)&emsp;<input type="checkbox" id="yesterday" name="yesterday" value="Yesterday" /><label for="yesterday">Check this box if time was yesterday.</label> </span></p>
-        <hr />        <p align="left" class="style13">&nbsp;&nbsp;Now select ONE to create an Entry:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          <span class="style1">
-          <input name="Inbtn" type="button" id="Inbtn" onclick="AddIn();" value="In" />
-          </span><span class="style1">
-          <input name="Outbtn" type="button" id="Outbtn" onclick="AddOut();" value="Out" />
-        </span>
-<input name="Dropbtn" type="button" id="Dropbtn" onclick="AddDrop()" value="Drop" />
-        &nbsp;
-        <input name="sendto" type="hidden" id="sendto" size="30" /> 
-        <textarea name="parseme" cols="60" id="parseme" style="display: none;"></textarea>
-        &nbsp;<span class="style1 style9"><span style="font-family: Calibri;">
-        <input name="savebtn" type="button" class="other2" id="savebtn"  onclick="SaveData()" value="Save Race data " />
-        </span></span>&nbsp;<span class="style8"><small><b><big>
-        <small><b><big>
-        <input name="loadbtn" type="button" class="other" id="loadbtn" onclick="document.getElementById('txtfiletoread').click();" value=" Load Race data" />
-        </big></b></small>        </big></b></small></span> <em>&nbsp;</em> <span class="style8">
+        </p>
         
-        &nbsp;
-        </span>  </p>
         <hr />
+        
+        <p align="left" class="style13">
+        <span class="style14"></span>
+        <span class="style20">Bib or Rider #:</span>
+        <input name="RiderNum" type="text" id="RiderNum" onkeypress="if(event.keyCode==13){a=setfocus(); return false;}" size="15" maxlength="13"  onblur="javascript:this.value=this.value.trim();this.value=this.value.toUpperCase(); putTime();" />
+        Click box to add Time:
+        <input name="Timefld" type="text" id="Timefld" style=" width: 50px;" onkeypress="if(event.keyCode==13){alert('Click: IN - OUT - DROP');return false;}" size="6" maxlength="6" onblur=" this.value=this.value.trim(); " />
+        <span class="style21">(accept or modify the time)
+            <input type="checkbox" id="yesterday" name="yesterday" value="Yesterday" />
+            <label for="yesterday">Check this box if time was yesterday.</label>
+            </span>
+        </p>
+
+        <hr />
+        
+        <p align="left" class="style13">Now select ONE to create an Entry:
+        <span class="style1">
+            <input name="Inbtn" type="button" id="Inbtn" onclick="AddIn();" value="In" />
+          </span>
+        <span class="style1">
+            <input name="Outbtn" type="button" id="Outbtn" onclick="AddOut();" value="Out" />
+        </span>
+        <input name="Dropbtn" type="button" id="Dropbtn" onclick="AddDrop()" value="Drop" />
+        <input name="sendto" type="hidden" id="sendto" size="30" />
+        <textarea name="parseme" cols="60" id="parseme" style="display: none;"></textarea>
+        <span class="style1 style9"><span style="font-family: Calibri;">
+        <input name="savebtn" type="button" class="other2" id="savebtn"  onclick="SaveData()" value="Save Race data " />
+        </span>
+            </span>
+        <span class="style8">
+            <input name="loadbtn" type="button" class="other" id="loadbtn" onclick="document.getElementById('txtfiletoread').click();" value=" Load Race data" />
+            </span>
+        <span class="style8">
+            </span>
+        </p>
+        
+        <hr />
+        
         <div align="left"></div>
         <table width="588"  border="1" align="center" cellpadding="0" cellspacing="0">
           <tr>
-            <td width="584" height="500" valign="top" bgcolor="f8f8ff"><div align="left">
+            <td width="584" height="500" valign="top" bgcolor="f8f8ff">
+                <div align="left">
               <p align="center">
-                      <span class="style13">Number of Entries</span>
-                  <input name="numlines" type="text" id="numlines" style="color: red;" readonly value="0" size="5" />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="style1 style9, style1">
-                  <input name="doclear" type="reset" id="doclear" onclick="Docleardata()" value="Clear Entries" /> </span></p>
+                <span class="style13">Number of Entries</span>
+                <input name="numlines" type="text" id="numlines" style="color: red;" readonly value="0" size="5" />
+                <span class="style1 style9">
+                  <input name="doclear" type="reset" id="doclear" onclick="Docleardata()" value="Clear Entries" />
+                    </span>
+              </p>
               <p align="center">
-                <textarea name="TheData" cols="55" placeholder="NOTE: No more than 20 Entries in one message, if using UltraLive." rows="23" id="TheData"  onkeypress="if(event.keyCode==13){countLines2() }" onblur="countLines2()" ></textarea>
-</p>
-              <p align="center"><span class="style13">  Comments:</span><span class="style13"></span><span class="style13"><br />
- 
-                      <textarea name="Comment" cols="55" rows="2" id="Comment" onkeyup="AutoGrowTextArea(this)" ></textarea>
-</span></p>
-              </div></td>
+                  <textarea name="TheData" cols="55" placeholder="NOTE: No more than 20 Entries in one message, if using UltraLive." rows="23" id="TheData"  onkeypress="if(event.keyCode==13){countLines2() }" onblur="countLines2()" ></textarea>
+              </p>
+              <p align="center">
+                <span class="style13">Comments:</span>
+                <span class="style13"></span>
+                <span class="style13">
+                  <br />
+                  <textarea name="Comment" cols="55" rows="2" id="Comment" onkeyup="AutoGrowTextArea(this)" ></textarea>
+                    </span>
+              </p>
+                    </div>
+              </td>
           </tr>
+
           <tr>
-            <td height="88" bgcolor="ffffe6">            <div align="left">
-              <p align="center" class="style1 style9"><span class="style13"> </span>                <span class="style13"> </span>
-                <input type="button" value="Format for UltraLive Submittal (optional)" onclick="DoConfirm();" />
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="style13">
-<input name="undo" type="button" id="undo"  onclick="undoformatting()" value="Remove UltraLive Formatting" />
-</span></p>
-              <p align="left" class="style1 style9"><span class="style1, formtext, formtext1" style="font-family: Calibri;">
-&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input style="height: 28px; width: 85px; c" title="After submitting, close browser, then address message for posting" class="SubmitBtn" enctype="multipart/form-data" id="Submit" method="Post" name="Submit" value="SUBMIT" type="submit" />
-  &nbsp; 
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />            
-            </div></td></tr>
+            <td height="88" bgcolor="ffffe6">
+              <div align="left">
+                <p align="center" class="style1 style9">
+                  <span class="style13"></span>
+                  <span class="style13"></span>
+                  <input type="button" value="Format for UltraLive Submittal (optional)" onclick="DoConfirm();" />
+                  <span class="style13">
+                    <input name="undo" type="button" id="undo" onclick="undoformatting()" value="Remove UltraLive Formatting" />
+                      </span>
+                </p>
+              <p align="left" class="style1 style9">
+                  <span class="style1, formtext, formtext1" style="font-family: Calibri;"></span>
+                  <input style="height: 28px; width: 85px;" title="After submitting, close browser, then address message for posting" class="SubmitBtn" enctype="multipart/form-data" id="Submit" method="Post" name="Submit" value="SUBMIT" type="submit" />
+                  </div>
+                </td>
+          </tr>
         </table>
-
-
       </td>
   </tr>
 </table>
 </form>
+
 <div id="pop1" class="pop-up">
         <!-- The pop-up block -->
 
@@ -1092,7 +1142,7 @@ onclick="location.href = '#pop1'" />
 
           <div class="popScroll">
 
-           <p> 
+           <p>
   Winlink Operator Supplemental Information<br /><br />
   If NOT doing UltraLive, then data entered is formatted as TAB delineated text in the sent message, for spreadsheet entry or a running log. <br /><br />
   >>> The Subject line will be formatted for you.<<< <br /><br />
@@ -1135,10 +1185,8 @@ Sample Data Report</p>
           </div>
      <!-- The close pop-up link correctly positioned at the end of the content block -->
 
-<a class="close" href="#links"><span>Back
-
-to links</span></a> </div>
-
+<a class="close" href="#links"><span>Back to links</span></a>
+        </div>
 </div>
 
 <div id="pop2" class="pop-up">
@@ -1149,19 +1197,15 @@ to links</span></a> </div>
 
           <div class="popScroll">
 
-           <p> 
-  Ultralive formatting Information<p></p>
-
-From <a href="https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit" target="_blank">https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit</a>
-<br /><p></p>
-  Suggest you download and have a copy for event.<br />
+           <p>Ultralive formatting Information From <a href="https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit" target="_blank">https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit</a>
+            <br />
+              Suggest you download and have a copy for event.
+              <br />
           </div>
      <!-- The close pop-up link correctly positioned at the end of the content block -->
 
-<a class="close" href="#links"><span>Back
-
-to links</span></a> </div>
-
+<a class="close" href="#links">Back to links</a>
+        </div>
 </div>
 
 </body>

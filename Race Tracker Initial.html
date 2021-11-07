@@ -733,168 +733,182 @@
 
 <style type="text/css">
 
-.style1 {font-family: Arial, Helvetica, sans-serif}
-.style8 {font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
-.style9 {font-size: 12px}
-.style13 {font-size: 12px; font-family: Arial, Helvetica, sans-serif;}
+    .style1 {
+        font-family: Arial, Helvetica, sans-serif
+    }
 
-/* Pop-up content shifted off-screen when not in view. Still readable by screen-reader software. When targeted it fills the browser window. */
-.pop-up {position:absolute; top:0; left:-500em;}
-.pop-up:target {position:static; left:0;}
+    .style8 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+    }
 
-/* The pop-up itself */
-.popBox {
-background:#ffffff;
-/* alternatively fixed width / height and negative margins from 50% */
-position:absolute; left:20%; right:20%; top:20%; bottom:20%;
-z-index:10;
-border:1px solid #3a3a3a;
-/* CSS3 where available: rounded corners, drop-shadow, and fade in. */
-border-radius:.25rem;
-box-shadow:0 .5rem .5rem rgba(0,0,0,.5);
-opacity:0;
-transition: opacity 0.8s ease-out;
-}
+    .style9 {
+        font-size: 12px
+    }
 
-:target .popBox {
-    position:fixed; opacity:1;
-}
+    .style13 {
+        font-size: 12px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
 
-/* Light box properties */
-.lightbox {
-display:none;
-text-indent:-200em;
-background-color:rgba(0,0,0,.4);
-width:100%;
-height:100%;
-position:fixed;
-top:0;
-left:0;
-bottom:0;
-right:0;
-z-index:5;
-}
+    .style14 {
+        font-size: 14px;
+        font-weight: bold;
+    }
 
-:target .lightbox {
-    display:block;
-}
+    .style19 {
+        font-size: 10px;
+    }
 
-/* The pop-ups close link, moved via CSS to the top right of the pop-up */
-.close:link,
-.close:visited {
-position: absolute;
-top: -0.75em;
-right: -0.75em;
-display: block;
-width: 2em;
-height: 2em;
-line-height: 1.8;
-padding: 0;
-text-align: center;
-text-decoration: none;
-background-color: #000;
-border: 2px solid #fff;
-color: #fff;
-border-radius: 50%;
-box-shadow: 0 0 .5rem .5rem rgba(0,0,0,.5);
-}
+    .style20 {
+        font-size: 14px;
+        color: darkorange;
+    }
 
-.close:before {
-    content:"X";
-}
+    .style21 {
+        color: darkblue;
+        font-style: italic;
+    }
 
-.close:hover,
-.close:active,
-.close:focus {
-box-shadow: 0 0 .5rem .5rem rgba(255,0,0,.5);
-background-color: #c00;
-color: #fff;
-}
+    .style29 {
+        font-size: xx-large
+    }
 
-.close span {
-text-indent: -200em;
-display: block;
-}
+    .formtext {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10pt;
+        font-weight: normal;
+    }
 
-/* The pop-up content div will scroll if it has too much content */
-.popScroll {
-position:absolute;
-top: 1rem;
-left: 1rem;
-right: 1rem;
-bottom: 1rem;
-overflow-y: auto;
-*overflow-y: scroll;
-padding-right: 0.5em;
-}
+    .formtext1 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        font-weight: normal;
+    }
 
-.popScroll h2 {
-    margin-top:0
-}
+    .other {
+        width: 110px;
+        border: 2px solid blue;
+        border-radius: .25rem;
+        background-color: white;
+        color: black;
+        padding: 2px 2px;
+        font-size: 14px;
+        cursor: pointer;
+    }
 
-.style14 {
-	font-size: 14px;
-	font-weight: bold;
-}
+    .other2 {
+        width: 110px;
+        border: 2px solid darkblue;
+        border-radius: .25rem;
+        background-color: white;
+        color: black;
+        padding: 2px 2px;
+        font-size: 14px;
+        cursor: pointer;
+    }
 
-.style19 {
-    font-size: 10px;
-}
+    /* Pop-up content shifted off-screen when not in view. Still readable by screen-reader software. When targeted it fills the browser window. */
+    .pop-up {
+        position:absolute; top:0; left:-500em;
+    }
 
-.style20 {
-	font-size: 14px;
-	color: #FF0000;
-}
+    .pop-up:target {
+        position:static; left:0;
+    }
 
-.style21 {
-	color: #2A5F00;
-	font-style: italic;
-}
+    /* The pop-up itself */
+    .popBox {
+        background:#ffffff;
+        /* alternatively fixed width / height and negative margins from 50% */
+        position:absolute; left:20%; right:20%; top:20%; bottom:20%;
+        z-index:10;
+        border:1px solid #3a3a3a;
+        /* CSS3 where available: rounded corners, drop-shadow, and fade in. */
+        border-radius:.25rem;
+        box-shadow:0 .5rem .5rem rgba(0,0,0,.5);
+        opacity:0;
+        transition: opacity 0.8s ease-out;
+    }
 
-.formtext {
-    font-family: Arial, Helvetica, sans-serif;
-font-size: 10pt;
-font-weight: normal;
-}
+    :target .popBox {
+        position:fixed; opacity:1;
+    }
 
-.formtext1 {
-    font-family: Arial, Helvetica, sans-serif;
-font-size: 11pt;
-font-weight: normal;
-}
+    /* Light box properties */
+    .lightbox {
+        display:none;
+        text-indent:-200em;
+        background-color:rgba(0,0,0,.4);
+        width:100%;
+        height:100%;
+        position:fixed;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+        z-index:5;
+    }
 
-.style28 {
-    color: #2A5F00;
-}
+    :target .lightbox {
+        display:block;
+    }
 
-.style29 {
-    font-size: xx-large
-}
+    /* The pop-ups close link, moved via CSS to the top right of the pop-up */
+    .close:link,
+    .close:visited {
+        position: absolute;
+        top: -0.75em;
+        right: -0.75em;
+        display: block;
+        width: 2em;
+        height: 2em;
+        line-height: 1.8;
+        padding: 0;
+        text-align: center;
+        text-decoration: none;
+        background-color: #000;
+        border: 2px solid #fff;
+        color: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 .5rem .5rem rgba(0,0,0,.5);
+    }
 
-.other {
-width: 110px;
- border: 2px solid #0987CB;
- border-radius:.25rem;
-  background-color: white;
-  color: black;
-  padding: 2px 2px;
-  font-size: 14px;
-   cursor: pointer;
-}
+    .close:before {
+        content:"X";
+    }
 
-.other2 {
-width: 110px;
- border: 2px solid blue;
- border-radius:.25rem;
-  background-color: white;
-  color: black;
-  padding: 2px 2px;
-  font-size: 14px;
-   cursor: pointer;
-}
+    .close:hover,
+    .close:active,
+    .close:focus {
+        box-shadow: 0 0 .5rem .5rem rgba(255,0,0,.5);
+        background-color: #c00;
+        color: #fff;
+    }
+
+    .close {
+        text-indent: -200em;
+        display: block;
+    }
+
+    /* The pop-up content div will scroll if it has too much content */
+    .popScroll {
+        position:absolute;
+        top: 1rem;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        overflow-y: auto;
+        *overflow-y: scroll;
+        padding-right: 0.5em;
+    }
+
+    .popScroll h2 {
+        margin-top:0
+    }
 
     input[type=submit] {
-        border: 2px solid green;
+        border: 2px solid darkblue;
         border-radius: .25rem;
         background-color: white;
         color: black;
@@ -904,7 +918,7 @@ width: 110px;
     }
 
     input[type=reset] {
-        border: 2px solid red;
+        border: 2px solid darkorange;
         border-radius: .25rem;
         background-color: white;
         color: black;
@@ -929,7 +943,7 @@ width: 110px;
         <input name="Theversion" type="hidden" id="Theversion" value="4.0 alpha" />
         <span class="style13">
             <span class="style1">
-            <input type="button" value="Form Information -  READ" onclick="location.href = '#pop1'" />
+            <input type="button" value="Form Information - READ" onclick="location.href='#pop1'" />
         </span>
         </span>
         <span class="style13">
@@ -938,7 +952,7 @@ width: 110px;
             </span>
         </h3>
       <p class="style13">Race/Event Name:
-        <input name="EventTitle" type="text" id="EventTitle"  onchange = "store();" size="40" maxlength="35" required="required" placeholder="Races or Event Name"/>
+        <input name="EventTitle" type="text" id="EventTitle" onchange="store();" size="40" maxlength="35" required="required" placeholder="Races or Event Name"/>
         <span class="style1">
           <span class="style8">
               </span>
@@ -1041,7 +1055,7 @@ width: 110px;
                 <div align="left">
               <p align="center">
                 <span class="style13">Number of Entries</span>
-                <input name="numlines" type="text" id="numlines" style="color: red;" readonly value="0" size="5" />
+                <input name="numlines" type="text" id="numlines" style="color:darkorange" readonly value="0" size="5" />
                 <span class="style1 style9">
                   <input name="doclear" type="reset" id="doclear" onclick="Docleardata()" value="Clear Entries" />
                     </span>

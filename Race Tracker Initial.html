@@ -9,9 +9,9 @@
 <title>Race Tracker</title> 
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <meta name="author" content="Greg KG6SJT" />
-    <meta name="author" content="Jon K7RMZ" />
-    <meta name="description" content="Race Tracker Form for Winlink Express created by KG6SJT, modified by K7RMZ for Bigfoot ultra marathon comms-support events." />
+<meta name="author" content="Greg KG6SJT" />
+<meta name="author" content="Jon K7RMZ" />
+<meta name="description" content="Race Tracker Form for Winlink Express created by KG6SJT, modified by K7RMZ for Bigfoot ultra marathon comms-support events." />
 <script language="javascript" type="text/javascript"> 
 
 <!-- 
@@ -162,9 +162,7 @@
         document.getElementById("beforeformatting").value = document.getElementById("TheData").value;
         var addtag = "/IN";
 
-        // Subject:<var EventTitle> Tracking Times at <var Location>
         delBlankLines();
-        var regulartitle = document.getElementById('EventTitle').value + ' Tracking Times at ' + document.getElementById('Location').value
         var d = new Date();
         var themonth = d.getMonth();
         themonth = themonth + 1;
@@ -188,15 +186,12 @@
         var str = rtrim(str1);
         var mystring = str;
         var FirstTime = str;
-        var allofit;
-        allofit = "";
         var nostatus = false;
 
         if (nostatus == false) {
             FirstTime = mystring.split("/", 2);
         }
 
-        // added code
         var FirstTime = str.split("/", 2);
         var sstr = FirstTime;
         var FirstTime = sstr[1].split(/\n/, 1);
@@ -208,7 +203,6 @@
         }
 
         // now check for 3 digit times
-        var tfix;
         var lines = str.split("\n");
 
         for (var i = 0; i < lines.length; i++) {
@@ -225,7 +219,6 @@
 
                 lines[i] = fixthis;
                 var mtime = lines[i].split("/", 3);
-                var tempsplit = lines[i].split("/", 3);
 
                 try {
                     if (mtime[1].length < 4) { lines[i] = mtime[0] + "/" + "0" + mtime[1] };
@@ -234,7 +227,6 @@
                     alert('Invalid data entry.\nCorrect format is Bib#/Time/Status\nin line -->' + fixthis + '<--');
                     return false;
                 }
-                var teststr = tempsplit[2];
                 if (mtime[2] == '-' || mtime[2] == '+' || mtime[2] == '*' || mtime[2] !== undefined) {
                     lines[i] = mtime[0] + "/" + mtime[1] + "/" + mtime[2];
                 }
@@ -250,14 +242,9 @@
         }
 
         n = lines.join("\n");
-        var lookfor = "//";
         var n = n.replace(/\/\//gm, "/");
         var n = n.replace(/\+/gm, "IN");
         var n = n.replace(/\-/gm, "OUT");
-
-        //TODO: check out the commented-out DROP code
-        //var n=n.replace(/\*/gm, "DROP");
-
         expand = false
         var msg = location + "\r" + mymonth + myday + "\r" + n + "\r" + "END";
         var msubject = "DATA " + thelocation + " " + FirstTime;
@@ -281,9 +268,7 @@
 /* ************************************************* */
 
     function RunnerTime(RightNow) {
-        var txt;
-        var d = new Date(),
-            thisyear = d.getFullYear();
+        var d = new Date();
         thismonth = d.getMonth();
         thismonth = thismonth + 1;
 
@@ -471,18 +456,19 @@
     }
 
     function Sortit() {
-        //  TODO: verify functionality now that orderstring has been refactored out of this function
         var myString = document.getElementById("TheData").value;
         orderString(myString);
     }
 
     function orderString(str) {
-        //  TODO: orderString used to be enclosed in Sortit so test this refactored version somehow
         var i = 0;
         var myArray = str.split('\n');
+
         while (i < str.length) {
             var j = i + 1;
+
             while (j < str.length) {
+
                 if (myArray[j] < myArray[i]) {
                     var temp = myArray[i];
                     myArray[i] = myArray[j];
@@ -492,6 +478,7 @@
             }
             i++;
         }
+
         var newString = myArray.join('\n');
         document.getElementById("TheData").value = newString;
     }
@@ -575,7 +562,6 @@
     }
 
     function DateforFile(RightNow) {
-        var txt;
         var d = new Date(),
             thisyear = d.getFullYear();
         thismonth = d.getMonth();
@@ -745,8 +731,6 @@
 
 <style type="text/css">
 
-<!--
-
 .style1 {font-family: Arial, Helvetica, sans-serif}
 
 .style8 {font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
@@ -754,19 +738,6 @@
 .style9 {font-size: 12px}
 
 .style13 {font-size: 12px; font-family: Arial, Helvetica, sans-serif;}
-
--->
-
-</style>
-<style>
-
-/*
-
-body {color:#000; background:#fff; font:100%/1.5 arial,sans-serif;}
-
-h2 {margin-top:0}
-
-*/
 
 /* Styling applied to classes only */
 
@@ -874,7 +845,7 @@ color: #fff;
 
 border-radius: 50%;
 
-box-shadow: 0 0 .5rem .5rem rba(0,0,0,.5);
+box-shadow: 0 0 .5rem .5rem rgba(0,0,0,.5);
 
 }
 
@@ -886,7 +857,7 @@ box-shadow: 0 0 .5rem .5rem rba(0,0,0,.5);
 
 .close:focus {
 
-box-shadow: 0 0 .5rem .5rem rba(255,0,0,.5);
+box-shadow: 0 0 .5rem .5rem rgba(255,0,0,.5);
 
 background-color: #c00;
 
@@ -948,25 +919,7 @@ font-weight: normal;
 }
 .style28 {color: #2A5F00}
 .style29 {font-size: xx-large}
-input[type=submit] {
- border: 2px solid green;
-  border-radius:.25rem;
-  background-color: white;
-  color: black;
-  padding: 2px 2px;
-  font-size: 14px;
-   cursor: pointer;
-}
-input[type=reset] {
- border: 2px solid red;
- border-radius:.25rem;
-  background-color: white;
-  color: black;
-  padding: 2px 2px;
-  font-size: 14px;
-   cursor: pointer;
-}
-input[type=Other] {
+.other {
 width: 110px;
  border: 2px solid #0987CB;
  border-radius:.25rem;
@@ -976,7 +929,7 @@ width: 110px;
   font-size: 14px;
    cursor: pointer;
 }
-input[type=Other2] {
+.other2 {
 width: 110px;
  border: 2px solid blue;
  border-radius:.25rem;
@@ -986,6 +939,25 @@ width: 110px;
   font-size: 14px;
    cursor: pointer;
 }
+    input[type=submit] {
+        border: 2px solid green;
+        border-radius: .25rem;
+        background-color: white;
+        color: black;
+        padding: 2px 2px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    input[type=reset] {
+        border: 2px solid red;
+        border-radius: .25rem;
+        background-color: white;
+        color: black;
+        padding: 2px 2px;
+        font-size: 14px;
+        cursor: pointer;
+    }
 
 </style>
 
@@ -1012,26 +984,26 @@ onclick="location.href = '#pop1'" />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<span class="style1"><span class="style8">
 </span></span></p>
         <p class="style13">&nbsp;   Send to:           
-          <input name="address" type="text" id="address" onchange = "store();" size="50" maxlength="45"  title= "Seperate multiple calls or address's with a semicolon;" required placeholder = "Winlink Radio Call or Email"/>
-  &nbsp;Aid Station:   
+          <input name="address" type="text" id="address" onchange = "store();" size="50" maxlength="45"  title= "Separate multiple calls or addresses with a semicolon;" required placeholder = "Winlink Radio Call or Email"/>
+  &nbsp;<label for="Location">Aid Station:</label>
           <select name="Location" type="text" id="Location" onchange="store();" size="3" required="required" maxlength="2">
-              <option value="MM" selected="selected">Marble Mountain SnoPark</option>
-              <option value="BL" selected="selected">Blue Lake</option>
-              <option value="WR" selected="selected">Windy Ridge</option>
-              <option value="JR" selected="selected">Johnston Ridge</option>
-              <option value="CW" selected="selected">Coldwater Lake</option>
-              <option value="NP" selected="selected">Norway Pass</option>
-              <option value="EP" selected="selected">Elk Pass</option>
-              <option value="WM" selected="selected">Wright Meadow (Rd.9327)</option>
-              <option value="SB" selected="selected">Spencer Butte</option>
-              <option value="LR" selected="selected">Lewis River</option>
-              <option value="QR" selected="selected">Quartz Ridge</option>
-              <option value="CB" selected="selected">Council Bluff</option>
-              <option value="CH" selected="selected">Chain of Lakes</option>
-              <option value="KT" selected="selected">Klickitat</option>
-              <option value="TS" selected="selected">Twisted Sister</option>
-              <option value="OC" selected="selected">Owen&acute;s Creek</option>
-              <option value="FN" selected="selected">Finish (Bigfoot Base)</option>
+              <option value="MM">Marble Mountain SnoPark</option>
+              <option value="BL">Blue Lake</option>
+              <option value="WR" selected>Windy Ridge</option>
+              <option value="JR">Johnston Ridge</option>
+              <option value="CW">Coldwater Lake</option>
+              <option value="NP">Norway Pass</option>
+              <option value="EP">Elk Pass</option>
+              <option value="WM">Wright Meadow (Rd.9327)</option>
+              <option value="SB">Spencer Butte</option>
+              <option value="LR">Lewis River</option>
+              <option value="QR">Quartz Ridge</option>
+              <option value="CB">Council Bluff</option>
+              <option value="CH">Chain of Lakes</option>
+              <option value="KT">Klickitat</option>
+              <option value="TS">Twisted Sister</option>
+              <option value="OC">Owen&acute;s Creek</option>
+              <option value="FN">Finish (Bigfoot Base)</option>
           </select>
 &nbsp;<span class="style1"><span class="style8">        <input name="FormatNote" type="hidden" id="FormatNote" value="* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet." />
 
@@ -1060,10 +1032,10 @@ onclick="location.href = '#pop1'" />
         <input name="sendto" type="hidden" id="sendto" size="30" /> 
         <textarea name="parseme" cols="60" id="parseme" style="display: none;"></textarea>
         &nbsp;<span class="style1 style9"><span style="font-family: Calibri;">
-        <input name="savebtn" type="Other2" id="savebtn"  onclick="SaveData()" value="Save Race data " />
+        <input name="savebtn" type="button" class="other2" id="savebtn"  onclick="SaveData()" value="Save Race data " />
         </span></span>&nbsp;<span class="style8"><small><b><big>
         <small><b><big>
-        <input name="loadbtn" type="Other" id="loadbtn" onclick="document.getElementById('txtfiletoread').click();" value=" Load Race data" />
+        <input name="loadbtn" type="button" class="other" id="loadbtn" onclick="document.getElementById('txtfiletoread').click();" value=" Load Race data" />
         </big></b></small>        </big></b></small></span> <em>&nbsp;</em> <span class="style8">
         
         &nbsp;
@@ -1076,9 +1048,8 @@ onclick="location.href = '#pop1'" />
               <p align="center">
                       <span class="style13">Number of Entries</span>
                   <input name="numlines" type="text" id="numlines" style="color: red;" readonly value="0" size="5" />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="style1 style9"><span class="style1">
-                  <input name="doclear" type="reset" id="doclear" onclick="Docleardata()" value="Clear Entries" />
-</span></span> </span></p>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="style1 style9, style1">
+                  <input name="doclear" type="reset" id="doclear" onclick="Docleardata()" value="Clear Entries" /> </span></p>
               <p align="center">
                 <textarea name="TheData" cols="55" placeholder="NOTE: No more than 20 Entries in one message, if using UltraLive." rows="23" id="TheData"  onkeypress="if(event.keyCode==13){countLines2() }" onblur="countLines2()" ></textarea>
 </p>
@@ -1095,7 +1066,7 @@ onclick="location.href = '#pop1'" />
 &nbsp;&nbsp;&nbsp;&nbsp;<span class="style13">
 <input name="undo" type="button" id="undo"  onclick="undoformatting()" value="Remove UltraLive Formatting" />
 </span></p>
-              <p align="left" class="style1 style9"><span class="style1"><small><span class="formtext"><span style="font-family: Calibri;"><small><span style="font-family: Calibri;"><small><span style="font-family: Calibri;"><small><span class="formtext1"><span style="font-family: Calibri;"><small><big><big><small><span style="font-family: Calibri;">
+              <p align="left" class="style1 style9"><span class="style1, formtext, formtext1" style="font-family: Calibri;">
 &nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

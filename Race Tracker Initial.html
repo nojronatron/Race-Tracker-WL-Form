@@ -310,19 +310,20 @@
 
             var theDate = new Date();
             toDay = theDate.getDate();
+
+            if (document.getElementById("yesterday").checked) {
+                if (toDay == 1) {
+                    toDay = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    toDay -= 1;
+                }
+            }
+
             dayOfMonth = String(toDay);
 
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
-            }
-
-            if (document.getElementById("yesterday").checked) {
-                if (dayOfMonth == 1) {
-                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
-                }
-                else {
-                    dayOfMonth -= 1;
-                }
             }
 
             var Location = document.getElementById("Location").value;
@@ -358,19 +359,20 @@
 
             var theDate = new Date();
             toDay = theDate.getDate();
+
+            if (document.getElementById("yesterday").checked) {
+                if (toDay == 1) {
+                    toDay = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    toDay -= 1;
+                }
+            }
+
             dayOfMonth = String(toDay);
 
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
-            }
-
-            if (document.getElementById("yesterday").checked) {
-                if (dayOfMonth == 1) {
-                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
-                }
-                else {
-                    dayOfMonth -= 1;
-                }
             }
 
             var Location = document.getElementById("Location").value;
@@ -416,19 +418,20 @@
 
             var theDate = new Date();
             toDay = theDate.getDate();
+
+            if (document.getElementById("yesterday").checked) {
+                if (toDay == 1) {
+                    toDay = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    toDay -= 1;
+                }
+            }
+
             dayOfMonth = String(toDay);
 
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
-            }
-
-            if (document.getElementById("yesterday").checked) {
-                if (dayOfMonth == 1) {
-                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
-                }
-                else {
-                    dayOfMonth -= 1;
-                }
             }
 
             var Location = document.getElementById("Location").value;

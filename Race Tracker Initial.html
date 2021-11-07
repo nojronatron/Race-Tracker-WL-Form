@@ -734,193 +734,143 @@
 <style type="text/css">
 
 .style1 {font-family: Arial, Helvetica, sans-serif}
-
 .style8 {font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
-
 .style9 {font-size: 12px}
-
 .style13 {font-size: 12px; font-family: Arial, Helvetica, sans-serif;}
 
-/* Styling applied to classes only */
-
-/* Pop-up content shifted off-screen when not in view.
-
-Still readable by screen-reader software.
-
-When targeted it fills the browser window.
-
-*/
-
+/* Pop-up content shifted off-screen when not in view. Still readable by screen-reader software. When targeted it fills the browser window. */
 .pop-up {position:absolute; top:0; left:-500em;}
-
 .pop-up:target {position:static; left:0;}
 
 /* The pop-up itself */
-
 .popBox {
-
 background:#ffffff;
-
 /* alternatively fixed width / height and negative margins from 50% */
-
 position:absolute; left:20%; right:20%; top:20%; bottom:20%;
-
 z-index:10;
-
 border:1px solid #3a3a3a;
-
 /* CSS3 where available: rounded corners, drop-shadow, and fade in. */
-
 border-radius:.25rem;
-
 box-shadow:0 .5rem .5rem rgba(0,0,0,.5);
-
 opacity:0;
-
 transition: opacity 0.8s ease-out;
-
 }
 
-:target .popBox {position:fixed; opacity:1;}
+:target .popBox {
+    position:fixed; opacity:1;
+}
 
 /* Light box properties */
-
 .lightbox {
-
 display:none;
-
 text-indent:-200em;
-
 background-color:rgba(0,0,0,.4);
-
 width:100%;
-
 height:100%;
-
 position:fixed;
-
 top:0;
-
 left:0;
-
 bottom:0;
-
 right:0;
-
 z-index:5;
-
 }
 
-:target .lightbox {display:block;}
+:target .lightbox {
+    display:block;
+}
 
 /* The pop-ups close link, moved via CSS to the top right of the pop-up */
-
 .close:link,
-
 .close:visited {
-
 position: absolute;
-
 top: -0.75em;
-
 right: -0.75em;
-
 display: block;
-
 width: 2em;
-
 height: 2em;
-
 line-height: 1.8;
-
 padding: 0;
-
 text-align: center;
-
 text-decoration: none;
-
 background-color: #000;
-
 border: 2px solid #fff;
-
 color: #fff;
-
 border-radius: 50%;
-
 box-shadow: 0 0 .5rem .5rem rgba(0,0,0,.5);
-
 }
 
-.close:before {content:"X";}
+.close:before {
+    content:"X";
+}
 
 .close:hover,
-
 .close:active,
-
 .close:focus {
-
 box-shadow: 0 0 .5rem .5rem rgba(255,0,0,.5);
-
 background-color: #c00;
-
 color: #fff;
-
 }
 
 .close span {
-
 text-indent: -200em;
-
 display: block;
-
 }
 
 /* The pop-up content div will scroll if it has too much content */
-
 .popScroll {
-
 position:absolute;
-
 top: 1rem;
-
 left: 1rem;
-
 right: 1rem;
-
 bottom: 1rem;
-
 overflow-y: auto;
-
 *overflow-y: scroll;
-
 padding-right: 0.5em;
-
 }
 
-.popScroll h2 {margin-top:0}
+.popScroll h2 {
+    margin-top:0
+}
+
 .style14 {
 	font-size: 14px;
 	font-weight: bold;
 }
-.style19 {font-size: 10px}
+
+.style19 {
+    font-size: 10px;
+}
+
 .style20 {
 	font-size: 14px;
 	color: #FF0000;
 }
+
 .style21 {
 	color: #2A5F00;
 	font-style: italic;
 }
-.formtext {font-family: Arial, Helvetica, sans-serif;
+
+.formtext {
+    font-family: Arial, Helvetica, sans-serif;
 font-size: 10pt;
 font-weight: normal;
 }
-.formtext1 {font-family: Arial, Helvetica, sans-serif;
+
+.formtext1 {
+    font-family: Arial, Helvetica, sans-serif;
 font-size: 11pt;
 font-weight: normal;
 }
-.style28 {color: #2A5F00}
-.style29 {font-size: xx-large}
+
+.style28 {
+    color: #2A5F00;
+}
+
+.style29 {
+    font-size: xx-large
+}
+
 .other {
 width: 110px;
  border: 2px solid #0987CB;
@@ -931,6 +881,7 @@ width: 110px;
   font-size: 14px;
    cursor: pointer;
 }
+
 .other2 {
 width: 110px;
  border: 2px solid blue;
@@ -941,6 +892,7 @@ width: 110px;
   font-size: 14px;
    cursor: pointer;
 }
+
     input[type=submit] {
         border: 2px solid green;
         border-radius: .25rem;
@@ -960,13 +912,11 @@ width: 110px;
         font-size: 14px;
         cursor: pointer;
     }
-
 </style>
-
 </head> 
-<body>
 
-<form style="font-family: Arial;" pbzloc="3" onsubmit="return confirm('To complete your form submission, click OK and close the open browser window. You will return to the new message window so you can post your message to the outbox');" method="post" id="myform" enctype="multipart/form-data" action="http://{FormServer}:{FormPort}">
+<body>
+<form style="font-family: Arial;" onsubmit="return confirm('To complete your form submission, click OK and close the open browser window. You will return to the new message window so you can post your message to the outbox');" method="post" id="myform" enctype="multipart/form-data" action="http://{FormServer}:{FormPort}">
 
 <table width="850" border="1" cellpadding="2" cellspacing="0" bordercolor="#999999">
   <tr>
@@ -1185,7 +1135,9 @@ Sample Data Report</p>
           </div>
      <!-- The close pop-up link correctly positioned at the end of the content block -->
 
-<a class="close" href="#links"><span>Back to links</span></a>
+<a class="close" href="#links">
+            <span>Back to links</span>
+</a>
         </div>
 </div>
 

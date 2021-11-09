@@ -17,42 +17,54 @@
 <!-- 
 
     function store() {
-        var formatted = document.getElementById("address");
-        localStorage.setItem("RTrackeradd", formatted.value);
-        var formatted = document.getElementById("Location");
-        localStorage.setItem("RTrackerloc", formatted.value);
-        var formatted = document.getElementById("EventTitle");
-        localStorage.setItem("RTrackertitle", formatted.value);
-        var regulartitle = document.getElementById('EventTitle').value + ' [Track Times at]: ' + document.getElementById('Location').value;
+        var addressFormatted = document.getElementById('address');
+        localStorage.setItem("RTrackeradd", addressFormatted.value);
+        var locationFormatted = document.getElementById('Location');
+        localStorage.setItem("RTrackerloc", locationFormatted.value);
+        var eventTitleFormatted = document.getElementById('EventTitle');
+        localStorage.setItem("RTrackertitle", eventTitleFormatted.value);
+        var msgNumFormatted = document.getElementById('MessageNumber');
+        localStorage.setItem("RTrackermsgNum", msgNumFormatted.value);
+        var regulartitle = document.getElementById('EventTitle').value + ' Aid Station ' + locationFormatted.value + ' Message #' + msgNumFormatted.value;
         document.getElementById('msgsubject').value = regulartitle;
     }	
 
     function getit() {
-        var storedValue = localStorage.getItem("RTrackeradd");
-        document.forms[0].address.value = storedValue;
-        var storedValue = localStorage.getItem("RTrackerloc");
-        document.forms[0].Location.value = storedValue;
-        var storedValue = localStorage.getItem("RTrackertitle");
-        document.forms[0].EventTitle.value = storedValue;
-        var regulartitle = document.getElementById('EventTitle').value + ' [Track Times at]: ' + document.getElementById('Location').value;
+        var storedAddress = localStorage.getItem('RTrackeradd');
+        document.forms[0].address.value = storedAddress;
+        var storedLocation = localStorage.getItem('RTrackerloc');
+        document.forms[0].Location.value = storedLocation;
+        var storedTitle = localStorage.getItem('RTrackertitle');
+        document.forms[0].EventTitle.value = storedTitle;
+        var storedMsgNumber = localStorage.getItem('RTrackermsgNum');
+        document.forms[0].MessageNumber.value = storedMsgNumber;
+        var regulartitle = document.getElementById('EventTitle').value + ' Aid Station ' + document.getElementById('Location').value + ' Message #' + document.getElementById('MessageNumber').value;
         document.getElementById('msgsubject').value = regulartitle;
+        document.getElementById('MessageNumber').value = storedMsgNumber;
         document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
     }
 
     function ClearForm() {
-
         document.forms[0].TheData.value = "";
-
         document.forms[0].msgsubject.value = "";
         document.getElementById("RiderNum").focus();
         document.getElementById("Inbtn").disabled = false;
-
         document.getElementById("Outbtn").disabled = false;
-
         document.getElementById("Dropbtn").disabled = false;
         document.getElementById("RiderNum").disabled = false;
         document.getElementById("numlines").disabled = false;
+        document.getElementById("numlines").value = '0';
+        document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
+    }
 
+    function ClearParticipantData() {
+        document.forms[0].TheData.value = "";
+        document.getElementById("RiderNum").focus();
+        document.getElementById("Inbtn").disabled = false;
+        document.getElementById("Outbtn").disabled = false;
+        document.getElementById("Dropbtn").disabled = false;
+        document.getElementById("RiderNum").disabled = false;
+        document.getElementById("numlines").disabled = false;
         document.getElementById("numlines").value = '0';
         document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
     }
@@ -125,7 +137,8 @@
     
     function Docleardata() {
         if (confirm("Clear all participant data?")) {
-            ClearForm();
+            //ClearForm();
+            ClearParticipantData();
         }
     }
 
@@ -704,11 +717,10 @@
                 var fileTobeRead = fileSelected.files[0];
                 //Check of the extension match 
                 if (fileTobeRead.type.match(fileExtension)) {
-                    //Initialize the FileReader object to read the 2file 
+                    //Initialize the FileReader object to read the file 
 
                     var fileReader = new FileReader();
                     fileReader.onload = function (e) {
-
                         document.getElementById('parseme').value = fileReader.result;
                         populateForm(obj = document.getElementById('parseme').value);
                     }
@@ -922,29 +934,34 @@
 </head> 
 
 <body>
-<form style="font-family: Arial;" onsubmit="return confirm('To complete your form submission, click OK and close the open browser window. You will return to the new message window so you can post your message to the outbox');" method="post" id="myform" enctype="multipart/form-data" action="http://{FormServer}:{FormPort}">
+<form style="font-family: Arial;" onsubmit="return confirm('To complete your form submission, click OK and close the browser tab. You will return to the new message window so you can post your message to the outbox.');" method="post" id="myform" enctype="multipart/form-data" action="http://{FormServer}:{FormPort}">
 
 <table width="750" border="1" cellpadding="2" cellspacing="0" bordercolor="#999999">
   <tr>
       <td width="842" height="882" valign="top" nowrap="nowrap">
           <p align="center">
-              <span class="style21 style29">
-                  Race Tracker
-                  <span class="style19">Ver. 4.0 alpha</span>
-              </span>
+                <span class="style21 style29">Race Tracker</span>
+                <span class="style19">Ver. 4.0 alpha</span>
 
-              <input name="Theversion" type="hidden" id="Theversion" value="4.0 alpha" />
-              <span class="style1">
+                <input name="Theversion" type="hidden" id="Theversion" value="4.0 alpha" />
+                <span class="style1">
                     <input type="button" value="Form Information - READ" onclick="location.href='#pop1'" />
-              </span>
+                </span>
           </p>
 
-          <p>Race/Event Name:
-              <input name="EventTitle" type="text" id="EventTitle" onchange="store();" size="40" maxlength="35" required="required" placeholder="Races or Event Name" />
+          <hr />
+
+          <p>
+              <span>
+                  <label for="EventTitle">Race or Event Name:</label>
+                  <input name="EventTitle" type="text" id="EventTitle" onchange="store();" size="40" maxlength="35" placeholder="Race or Event Name" required />
+                  <label for="MessageNumber">Message Number:</label>
+                  <input name="MessageNumber" type="text" id="MessageNumber" onchange="store();" size="6" maxlength="4" placeholder="1" />
+              </span>
           </p>
 
           <p>
-              Send to:
+              <label for="address">Send to:</label>
               <input name="address" type="text" id="address" onchange="store();" size="50" maxlength="45" title="Separate multiple calls or addresses with a semicolon;" placeholder="Winlink Radio Call or Email" required />
               <label for="Location">Aid Station:</label>
               <select name="Location" type="text" id="Location" onchange="store();" size="3" maxlength="2" required>
@@ -971,7 +988,8 @@
               </span>
           </p>
 
-          <p>Subject:
+          <p>
+              <label for="msgsubject">Subject:</label>
               <span class="style8">
                   <input name="msgsubject" type="text" id="msgsubject" readonly="readonly" size="60" maxlength="70" />
               </span>
@@ -994,8 +1012,6 @@
               </span>
           </p>
 
-          <hr />
-
           <p>Select ONE to create an Entry:
               <input name="Inbtn" type="button" id="Inbtn" onclick="AddIn();" value="In" title="Participant arrived at this station." />
               <input name="Outbtn" type="button" id="Outbtn" onclick="AddOut();" value="Out" title="Participant departed from this station." />
@@ -1015,7 +1031,7 @@
                           <p align="center">
                               <label for="numlines">Number of Entries</label>
                               <input name="numlines" type="text" id="numlines" style="color:darkorange" readonly value="0" size="5" title="Number of bib entries submitted." />
-                              <input name="doclear" type="reset" id="doclear" onclick="Docleardata()" value="Clear Entries" title="Clear all form entries and start over." />
+                              <input name="doclear" type="button" id="doclear" onclick="Docleardata()" value="Clear Entries" title="Clear all runner entries." />
                           </p>
 
                           <p align="center">

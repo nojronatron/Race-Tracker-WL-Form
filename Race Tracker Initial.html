@@ -25,9 +25,20 @@
         localStorage.setItem("RTrackertitle", eventTitleFormatted.value);
         var msgNumFormatted = document.getElementById('MessageNumber');
         localStorage.setItem("RTrackermsgNum", msgNumFormatted.value);
-        var regulartitle = document.getElementById('EventTitle').value + ' Aid Station ' + locationFormatted.value + ' Message #' + msgNumFormatted.value;
+        var locationLong = lengthenLocation(locationFormatted.value);
+        var regulartitle = document.getElementById('EventTitle').value + ' ' + locationLong + ' Message #' + msgNumFormatted.value;
         document.getElementById('msgsubject').value = regulartitle;
-    }	
+    }
+
+    function shortenLocation(locationVal) {
+        var underscoreIdx = locationVal.indexOf("_");
+        return locationVal.slice(0, underscoreIdx);
+    }
+
+    function lengthenLocation(locationVal) {
+        var underscoreIdx = locationVal.indexOf("_") + 1;
+        return locationVal.slice(underscoreIdx);
+    }
 
     function getit() {
         var storedAddress = localStorage.getItem('RTrackeradd');
@@ -38,7 +49,8 @@
         document.forms[0].EventTitle.value = storedTitle;
         var storedMsgNumber = localStorage.getItem('RTrackermsgNum');
         document.forms[0].MessageNumber.value = storedMsgNumber;
-        var regulartitle = document.getElementById('EventTitle').value + ' Aid Station ' + document.getElementById('Location').value + ' Message #' + document.getElementById('MessageNumber').value;
+        var locationLong = lengthenLocation(locationFormatted.value);
+        var regulartitle = document.getElementById('EventTitle').value + ' ' + locationLong + ' Message #' + document.getElementById('MessageNumber').value;
         document.getElementById('msgsubject').value = regulartitle;
         document.getElementById('MessageNumber').value = storedMsgNumber;
         document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
@@ -339,9 +351,11 @@
                 dayOfMonth = "0" + dayOfMonth;
             }
 
-            var Location = document.getElementById("Location").value;
+            var locationVal = document.getElementById("Location").value;
+            var shortLoc = shortenLocation(locationVal);
+
             var Previoustime = document.getElementById("TheData").value;
-            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "IN", TheTime, dayOfMonth, Location);
+            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "IN", TheTime, dayOfMonth, shortLoc);
             document.getElementById("RiderNum").value = '';
             document.getElementById("Timefld").value = '';
             yesterday.checked = false;
@@ -388,9 +402,11 @@
                 dayOfMonth = "0" + dayOfMonth;
             }
 
-            var Location = document.getElementById("Location").value;
+            var locationVal = document.getElementById("Location").value;
+            var shortLoc = shortenLocation(locationVal);
+
             var Previoustime = document.getElementById("TheData").value;
-            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "OUT", TheTime, dayOfMonth, Location);
+            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "OUT", TheTime, dayOfMonth, shortLoc);
             document.getElementById("RiderNum").value = '';
             document.getElementById("Timefld").value = '';
             yesterday.checked = false;
@@ -447,9 +463,11 @@
                 dayOfMonth = "0" + dayOfMonth;
             }
 
-            var Location = document.getElementById("Location").value;
+            var locationVal = document.getElementById("Location").value;
+            var shortLoc = shortenLocation(locationVal);
+
             var Previoustime = document.getElementById("TheData").value;
-            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "DROP", TheTime, dayOfMonth, Location);
+            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "DROP", TheTime, dayOfMonth, shortLoc);
             document.getElementById("RiderNum").value = '';
             document.getElementById("Timefld").value = '';
             yesterday.checked = false;
@@ -965,23 +983,23 @@
               <input name="address" type="text" id="address" onchange="store();" size="50" maxlength="45" title="Separate multiple calls or addresses with a semicolon;" placeholder="Winlink Radio Call or Email" required />
               <label for="Location">Aid Station:</label>
               <select name="Location" type="text" id="Location" onchange="store();" size="3" maxlength="2" required>
-                  <option value="MM">Marble Mountain SnoPark</option>
-                  <option value="BL">Blue Lake</option>
-                  <option value="WR" selected>Windy Ridge</option>
-                  <option value="JR">Johnston Ridge</option>
-                  <option value="CW">Coldwater Lake</option>
-                  <option value="NP">Norway Pass</option>
-                  <option value="EP">Elk Pass</option>
-                  <option value="WM">Wright Meadow (Rd.9327)</option>
-                  <option value="SB">Spencer Butte</option>
-                  <option value="LR">Lewis River</option>
-                  <option value="QR">Quartz Ridge</option>
-                  <option value="CB">Council Bluff</option>
-                  <option value="CH">Chain of Lakes</option>
-                  <option value="KT">Klickitat</option>
-                  <option value="TS">Twisted Sister</option>
-                  <option value="OC">Owen&acute;s Creek</option>
-                  <option value="FN">Finish (Bigfoot Base)</option>
+                  <option value="MM_Marble Mountain SnoPark">Marble Mountain SnoPark</option>
+                  <option value="BL_Blue Lake">Blue Lake</option>
+                  <option value="WR_Windy Ridge" selected>Windy Ridge</option>
+                  <option value="JR_Johnston Ridge">Johnston Ridge</option>
+                  <option value="CW_Coldwater Lake">Coldwater Lake</option>
+                  <option value="NP_Norway Pass">Norway Pass</option>
+                  <option value="EP_Elk Pass">Elk Pass</option>
+                  <option value="WM_Wright Meadow (Rd.9327)">Wright Meadow (Rd.9327)</option>
+                  <option value="SB_Spencer Butte">Spencer Butte</option>
+                  <option value="LR_Lewis River">Lewis River</option>
+                  <option value="QR_Quartz Ridge">Quartz Ridge</option>
+                  <option value="CB_Council Bluff">Council Bluff</option>
+                  <option value="CH_Chain of Lakes">Chain of Lakes</option>
+                  <option value="KT_Klickitat">Klickitat</option>
+                  <option value="TS_Twin Sisters">Twisted Sister</option>
+                  <option value="OC_Owens Creek">Owen&acute;s Creek</option>
+                  <option value="FN_Finish (Bigfoot Base)">Finish (Bigfoot Base)</option>
               </select>
               <span>
                   <input name="FormatNote" type="hidden" id="FormatNote" value="* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet." />

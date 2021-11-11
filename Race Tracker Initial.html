@@ -202,7 +202,6 @@
             document.forms[0].sendto.value = theaddress;
             var location = document.forms[0].Location.value;
             var AddSubject = true;
-            //var thelocation = location;
             var thelocation = location.split("_")[1];
             var location = "BEGIN " + location.split("_")[0];
             var str1 = document.forms[0].TheData.value;
@@ -223,10 +222,6 @@
             var FirstTime = sstr[1].split(/\n/, 1);
             junk = FirstTime;
             junka = String(junk);
-
-            //if (junka.length < 4) {
-            //    FirstTime = "0" + FirstTime;
-            //}
 
             // now check for 3 digit times
             var lines = str.split("\n");
@@ -264,9 +259,6 @@
 
                 // try agin
                 var mtime = lines[i].split("/", 3);
-                //    if (mtime[1].length < 4) {
-                //        lines[i] = mtime[0] + "/" + "0" + mtime[1] + "/" + mtime[2]
-                //    };
                 lines[i] = mtime[0] + "/" + mtime[2] + "/" + mtime[1]
             }
 
@@ -767,6 +759,10 @@
 
     <style type="text/css">
 
+        ul {
+            list-style-type: none;
+        }
+
         .style1, p {
             font-family: Arial, Helvetica, sans-serif;
             font-size: 14px;
@@ -810,6 +806,10 @@
             font-family: Arial, Helvetica, sans-serif;
             font-size: 11pt;
             font-weight: normal;
+        }
+
+        .poppedText{
+            font-size: 16px;
         }
 
         .other {
@@ -1111,51 +1111,47 @@
             <!-- If the content becomes larger than the pop-up this div will scroll the content -->
 
             <div class="popScroll">
-
+                <h2>Winlink Operator Supplemental Information</h2>
+                <p>Data entered is formatted as TAB delineated text in the sent message, for spreadsheet entry or a running log.</p>
+                <p class="style14">The Subject line will be formatted for you.</p>
+                <p>The LOAD and SAVE data buttons are for capturing entered race data. This allows you to start a form, close it if needed, then reopen the form and continue on.</p>
+                <p>Suggest you use and learn the form and its features fully before an event.</p>
+                <p>Note: You can change the time entry if doing manual entries, such as from a clipboard of participants. Times out of order have no affect on UltraLive entry or doing a spreadsheet.</p>
+                
+                <hr/>
+                
+                <h2>The below information is applicable for UltraLive data format.</h2>
+                <p class="style14">Bib records will all be dated with the current date!</p>
+                <p>Suggest you download and have a copy prior to your event if doing UltraLive.</p>
                 <p>
-                    Winlink Operator Supplemental Information<br /><br />
-                    If NOT doing UltraLive, then data entered is formatted as TAB delineated text in the sent message, for spreadsheet entry or a running log. <br /><br />
-                    >>> The Subject line will be formatted for you.<<< <br /><br />
-                    The LOAD and SAVE data buttons are for capturing entered race data. This allows you to start a form, close it if needed, then reopen the form and continue on.
-                    Suggest you use and learn the form and its features fully before an event. <br /><br />
-
-                    Note: You can change the time entry if doing manual entries, such as from a clipboard of participants. Times out of order have no affect on UltraLive entry or doing a spreadsheet.<br />
-                    <br />
-                    --------------------------------------------<br /><br />
-                    The below information is applicable for UltraLive data format.<br />
-
-                    Suggest you download and have a copy prior to your event if doing UltraLive.<br /><br />
-
-                    <a href="https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit">https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit</a> <br /><br />
-
-                    Someone needs to register first with UltraLive so you can enter the sent data. Info on how to do this easy process, is in the downloadable document in the above link. You have to do this prior to your event.<br />
-                    <br />
-                    The information that is sent via WinLink can be pasted into directly into the webcast site, or garnered to any form at Net Control. The data must follow the format examples below, (done for you) or it will not post properly into the Web Site. DO NOT send more than 20 lines of rider data at any one time.<br />
-                    <br />
-
-                <p align="left">
-                    UltraLive Email Subject Line<br /><br />
-                    &gt;&gt;&gt; The Subject line will format for you in UltraLive format.<br /><br />
-
-                    DATA LC 0905 --&gt; Subject line identifies this message as being data from Last Chance (LC). The identifying number is the time of the runner in the data report. Times are all in 24 hour format. No AM or PM.<br />
-
-                    Sample Data Report
+                    <a href="https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit">https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit</a>
                 </p>
+                <p>Someone needs to register first with UltraLive so you can enter the sent data. Info on how to do this easy process, is in the downloadable document in the above link. You have to do this prior to your event.</p>
+                <p>The information that is sent via WinLink can be pasted into directly into the webcast site, or garnered to any form at Net Control. The data must follow the format examples below, (done for you) or it will not post properly into the Web Site. DO NOT send more than 20 lines of rider data at any one time.</p>
+                <p class="style14">UltraLive Email Subject Line will be formatted for you.</p>
+                <p>DATA CW 0905&emsp;&rArr;&emsp;Subject line identifies this message as being data from Last Chance (LC). The identifying number is the time of the runner in the data report. Times are all in 24 hour format. No AM or PM.</p>
+                <p>Sample Data Report</p>
+                <table border="1">
+                    <tr>
+                        <td>
+                            <ul>
+                                <li><code>BEGIN CW&emsp;&rArr;&nbsp;Start of report. CW is the two letter ID of the aid station.</code></li>
+                                <li><code>0623&emsp;&rArr;&nbsp;The month and day in a 4 digit format.</code></li>
+                                <li><code>231/0905/IN</code></li>
+                                <li><code>345/1028/IN</code></li>
+                                <li><code>27/1316/DROP</code></li>
+                                <li><code>END&emsp;&rArr;&nbsp;End of report.</code></li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                <p>Drops should also be sent via the established voice network in a timely manner.</p>
 
-                <p align="left">
-                    BEGIN LC --&gt; start report. LC is the two letter identifier of the check point or aid station (Last Chance).<br />
+                <hr />
 
-                    0623 --&gt; The month and day in a 4 digit format<br />
-
-                    231/0905/IN<br />
-
-                    345/1028/IN<br />
-
-                    27/1316/DROP<br />
-
-                    END --&gt; end of report<br /><br />
-
-                    NOTE: Drops should also be sent via the established voice network in a timely manner. <br /><br /><br /><br /> For form design questions or suggestions contact: Greg KG6SJT of WDT. Form was tested with UltraLive staff.
+                <h2>Credits</h2>
+                <p>The original form was designed by Greg KG6SJT of WDT and was tested with UltraLive staff.</p>
+                <p><em>This version of the form has NOT been tested by UltraLive staff.</em></p>
             </div>
             <!-- The close pop-up link correctly positioned at the end of the content block -->
 

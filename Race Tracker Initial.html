@@ -9,50 +9,74 @@
 <title>Race Tracker</title> 
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-    <meta name="author" content="Greg KG6SJT" />
-    <meta name="author" content="Jon K7RMZ" />
-    <meta name="description" content="Race Tracker Form for Winlink Express created by KG6SJT, modified by K7RMZ for Bigfoot ultra marathon comms-support events." />
+<meta name="author" content="Greg KG6SJT" />
+<meta name="author" content="Jon K7RMZ" />
+<meta name="description" content="Race Tracker Form for Winlink Express created by KG6SJT, modified by K7RMZ for Bigfoot ultra marathon comms-support events." />
 <script language="javascript" type="text/javascript"> 
 
 <!-- 
 
     function store() {
-        var formatted = document.getElementById("address");
-        localStorage.setItem("RTrackeradd", formatted.value);
-        var formatted = document.getElementById("Location");
-        localStorage.setItem("RTrackerloc", formatted.value);
-        var formatted = document.getElementById("EventTitle");
-        localStorage.setItem("RTrackertitle", formatted.value);
-        var regulartitle = document.getElementById('EventTitle').value + ' [Track Times at]: ' + document.getElementById('Location').value;
+        var addressFormatted = document.getElementById('address');
+        localStorage.setItem("RTrackeradd", addressFormatted.value);
+        var locationFormatted = document.getElementById('Location');
+        localStorage.setItem("RTrackerloc", locationFormatted.value);
+        var eventTitleFormatted = document.getElementById('EventTitle');
+        localStorage.setItem("RTrackertitle", eventTitleFormatted.value);
+        var msgNumFormatted = document.getElementById('MessageNumber');
+        localStorage.setItem("RTrackermsgNum", msgNumFormatted.value);
+        var locationLong = lengthenLocation(locationFormatted.value);
+        var regulartitle = document.getElementById('EventTitle').value + ' ' + locationLong + ' Message #' + msgNumFormatted.value;
         document.getElementById('msgsubject').value = regulartitle;
-    }	
+    }
+
+    function shortenLocation(locationVal) {
+        var underscoreIdx = locationVal.indexOf("_");
+        return locationVal.slice(0, underscoreIdx);
+    }
+
+    function lengthenLocation(locationVal) {
+        var underscoreIdx = locationVal.indexOf("_") + 1;
+        return locationVal.slice(underscoreIdx);
+    }
 
     function getit() {
-        var storedValue = localStorage.getItem("RTrackeradd");
-        document.forms[0].address.value = storedValue;
-        var storedValue = localStorage.getItem("RTrackerloc");
-        document.forms[0].Location.value = storedValue;
-        var storedValue = localStorage.getItem("RTrackertitle");
-        document.forms[0].EventTitle.value = storedValue;
-        var regulartitle = document.getElementById('EventTitle').value + ' [Track Times at]: ' + document.getElementById('Location').value;
+        var storedAddress = localStorage.getItem('RTrackeradd');
+        document.forms[0].address.value = storedAddress;
+        var storedLocation = localStorage.getItem('RTrackerloc');
+        document.forms[0].Location.value = storedLocation;
+        var storedTitle = localStorage.getItem('RTrackertitle');
+        document.forms[0].EventTitle.value = storedTitle;
+        var storedMsgNumber = localStorage.getItem('RTrackermsgNum');
+        document.forms[0].MessageNumber.value = storedMsgNumber;
+        var locationLong = lengthenLocation(locationFormatted.value);
+        var regulartitle = document.getElementById('EventTitle').value + ' ' + locationLong + ' Message #' + document.getElementById('MessageNumber').value;
         document.getElementById('msgsubject').value = regulartitle;
+        document.getElementById('MessageNumber').value = storedMsgNumber;
         document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
     }
 
     function ClearForm() {
-
         document.forms[0].TheData.value = "";
-
         document.forms[0].msgsubject.value = "";
         document.getElementById("RiderNum").focus();
         document.getElementById("Inbtn").disabled = false;
-
         document.getElementById("Outbtn").disabled = false;
-
         document.getElementById("Dropbtn").disabled = false;
         document.getElementById("RiderNum").disabled = false;
         document.getElementById("numlines").disabled = false;
+        document.getElementById("numlines").value = '0';
+        document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
+    }
 
+    function ClearParticipantData() {
+        document.forms[0].TheData.value = "";
+        document.getElementById("RiderNum").focus();
+        document.getElementById("Inbtn").disabled = false;
+        document.getElementById("Outbtn").disabled = false;
+        document.getElementById("Dropbtn").disabled = false;
+        document.getElementById("RiderNum").disabled = false;
+        document.getElementById("numlines").disabled = false;
         document.getElementById("numlines").value = '0';
         document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
     }
@@ -125,7 +149,8 @@
     
     function Docleardata() {
         if (confirm("Clear all participant data?")) {
-            ClearForm();
+            //ClearForm();
+            ClearParticipantData();
         }
     }
 
@@ -162,9 +187,7 @@
         document.getElementById("beforeformatting").value = document.getElementById("TheData").value;
         var addtag = "/IN";
 
-        // Subject:<var EventTitle> Tracking Times at <var Location>
         delBlankLines();
-        var regulartitle = document.getElementById('EventTitle').value + ' Tracking Times at ' + document.getElementById('Location').value
         var d = new Date();
         var themonth = d.getMonth();
         themonth = themonth + 1;
@@ -188,15 +211,12 @@
         var str = rtrim(str1);
         var mystring = str;
         var FirstTime = str;
-        var allofit;
-        allofit = "";
         var nostatus = false;
 
         if (nostatus == false) {
             FirstTime = mystring.split("/", 2);
         }
 
-        // added code
         var FirstTime = str.split("/", 2);
         var sstr = FirstTime;
         var FirstTime = sstr[1].split(/\n/, 1);
@@ -208,7 +228,6 @@
         }
 
         // now check for 3 digit times
-        var tfix;
         var lines = str.split("\n");
 
         for (var i = 0; i < lines.length; i++) {
@@ -225,7 +244,6 @@
 
                 lines[i] = fixthis;
                 var mtime = lines[i].split("/", 3);
-                var tempsplit = lines[i].split("/", 3);
 
                 try {
                     if (mtime[1].length < 4) { lines[i] = mtime[0] + "/" + "0" + mtime[1] };
@@ -234,7 +252,6 @@
                     alert('Invalid data entry.\nCorrect format is Bib#/Time/Status\nin line -->' + fixthis + '<--');
                     return false;
                 }
-                var teststr = tempsplit[2];
                 if (mtime[2] == '-' || mtime[2] == '+' || mtime[2] == '*' || mtime[2] !== undefined) {
                     lines[i] = mtime[0] + "/" + mtime[1] + "/" + mtime[2];
                 }
@@ -250,14 +267,9 @@
         }
 
         n = lines.join("\n");
-        var lookfor = "//";
         var n = n.replace(/\/\//gm, "/");
         var n = n.replace(/\+/gm, "IN");
         var n = n.replace(/\-/gm, "OUT");
-
-        //TODO: check out the commented-out DROP code
-        //var n=n.replace(/\*/gm, "DROP");
-
         expand = false
         var msg = location + "\r" + mymonth + myday + "\r" + n + "\r" + "END";
         var msubject = "DATA " + thelocation + " " + FirstTime;
@@ -281,9 +293,7 @@
 /* ************************************************* */
 
     function RunnerTime(RightNow) {
-        var txt;
-        var d = new Date(),
-            thisyear = d.getFullYear();
+        var d = new Date();
         thismonth = d.getMonth();
         thismonth = thismonth + 1;
 
@@ -325,24 +335,27 @@
 
             var theDate = new Date();
             toDay = theDate.getDate();
+
+            if (document.getElementById("yesterday").checked) {
+                if (toDay == 1) {
+                    toDay = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    toDay -= 1;
+                }
+            }
+
             dayOfMonth = String(toDay);
 
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
             }
 
-            if (document.getElementById("yesterday").checked) {
-                if (dayOfMonth == 1) {
-                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
-                }
-                else {
-                    dayOfMonth -= 1;
-                }
-            }
+            var locationVal = document.getElementById("Location").value;
+            var shortLoc = shortenLocation(locationVal);
 
-            var Location = document.getElementById("Location").value;
             var Previoustime = document.getElementById("TheData").value;
-            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "IN", TheTime, dayOfMonth, Location);
+            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "IN", TheTime, dayOfMonth, shortLoc);
             document.getElementById("RiderNum").value = '';
             document.getElementById("Timefld").value = '';
             yesterday.checked = false;
@@ -373,24 +386,27 @@
 
             var theDate = new Date();
             toDay = theDate.getDate();
+
+            if (document.getElementById("yesterday").checked) {
+                if (toDay == 1) {
+                    toDay = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    toDay -= 1;
+                }
+            }
+
             dayOfMonth = String(toDay);
 
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
             }
 
-            if (document.getElementById("yesterday").checked) {
-                if (dayOfMonth == 1) {
-                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
-                }
-                else {
-                    dayOfMonth -= 1;
-                }
-            }
+            var locationVal = document.getElementById("Location").value;
+            var shortLoc = shortenLocation(locationVal);
 
-            var Location = document.getElementById("Location").value;
             var Previoustime = document.getElementById("TheData").value;
-            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "OUT", TheTime, dayOfMonth, Location);
+            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "OUT", TheTime, dayOfMonth, shortLoc);
             document.getElementById("RiderNum").value = '';
             document.getElementById("Timefld").value = '';
             yesterday.checked = false;
@@ -431,24 +447,27 @@
 
             var theDate = new Date();
             toDay = theDate.getDate();
+
+            if (document.getElementById("yesterday").checked) {
+                if (toDay == 1) {
+                    toDay = 31; // there are far more months with 31 than otherwise.
+                }
+                else {
+                    toDay -= 1;
+                }
+            }
+
             dayOfMonth = String(toDay);
 
             if (dayOfMonth.length < 2) {
                 dayOfMonth = "0" + dayOfMonth;
             }
 
-            if (document.getElementById("yesterday").checked) {
-                if (dayOfMonth == 1) {
-                    dayOfMonth = 31; // there are far more months with 31 than otherwise.
-                }
-                else {
-                    dayOfMonth -= 1;
-                }
-            }
+            var locationVal = document.getElementById("Location").value;
+            var shortLoc = shortenLocation(locationVal);
 
-            var Location = document.getElementById("Location").value;
             var Previoustime = document.getElementById("TheData").value;
-            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "DROP", TheTime, dayOfMonth, Location);
+            document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "DROP", TheTime, dayOfMonth, shortLoc);
             document.getElementById("RiderNum").value = '';
             document.getElementById("Timefld").value = '';
             yesterday.checked = false;
@@ -471,18 +490,19 @@
     }
 
     function Sortit() {
-        //  TODO: verify functionality now that orderstring has been refactored out of this function
         var myString = document.getElementById("TheData").value;
         orderString(myString);
     }
 
     function orderString(str) {
-        //  TODO: orderString used to be enclosed in Sortit so test this refactored version somehow
         var i = 0;
         var myArray = str.split('\n');
+
         while (i < str.length) {
             var j = i + 1;
+
             while (j < str.length) {
+
                 if (myArray[j] < myArray[i]) {
                     var temp = myArray[i];
                     myArray[i] = myArray[j];
@@ -492,6 +512,7 @@
             }
             i++;
         }
+
         var newString = myArray.join('\n');
         document.getElementById("TheData").value = newString;
     }
@@ -575,7 +596,6 @@
     }
 
     function DateforFile(RightNow) {
-        var txt;
         var d = new Date(),
             thisyear = d.getFullYear();
         thismonth = d.getMonth();
@@ -715,12 +735,10 @@
                 var fileTobeRead = fileSelected.files[0];
                 //Check of the extension match 
                 if (fileTobeRead.type.match(fileExtension)) {
-                    //Initialize the FileReader object to read the 2file 
+                    //Initialize the FileReader object to read the file 
 
                     var fileReader = new FileReader();
                     fileReader.onload = function (e) {
-                        var fileContents = document.getElementById('filecontents');
-
                         document.getElementById('parseme').value = fileReader.result;
                         populateForm(obj = document.getElementById('parseme').value);
                     }
@@ -745,371 +763,328 @@
 
 <style type="text/css">
 
-<!--
+    .style1, p {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+    }
 
-.style1 {font-family: Arial, Helvetica, sans-serif}
+    .style2 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 12px;
+    }
 
-.style8 {font-family: Arial, Helvetica, sans-serif; font-size: 14px; }
+    .style14 {
+        font-size: 14px;
+        font-weight: bold;
+    }
 
-.style9 {font-size: 12px}
+    .style19 {
+        font-size: 10px;
+    }
 
-.style13 {font-size: 12px; font-family: Arial, Helvetica, sans-serif;}
+    .style20 {
+        font-size: 14px;
+        color: darkorange;
+    }
 
--->
+    .style21 {
+        color: darkblue;
+        font-style: italic;
+    }
 
+    .style29 {
+        font-size: xx-large
+    }
+
+    .formtext {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10pt;
+        font-weight: normal;
+    }
+
+    .formtext1 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 11pt;
+        font-weight: normal;
+    }
+
+    .other {
+        width: 110px;
+        border: 2px solid blue;
+        border-radius: .25rem;
+        background-color: white;
+        color: black;
+        padding: 2px 2px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .other2 {
+        width: 110px;
+        border: 2px solid darkblue;
+        border-radius: .25rem;
+        background-color: white;
+        color: black;
+        padding: 2px 2px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    /* Pop-up content shifted off-screen when not in view. Still readable by screen-reader software. When targeted it fills the browser window. */
+    .pop-up {
+        position:absolute; top:0; left:-500em;
+    }
+
+    .pop-up:target {
+        position:static; left:0;
+    }
+
+    /* The pop-up itself */
+    .popBox {
+        background:#ffffff;
+        /* alternatively fixed width / height and negative margins from 50% */
+        position:absolute; left:20%; right:20%; top:20%; bottom:20%;
+        z-index:10;
+        border:1px solid #3a3a3a;
+        /* CSS3 where available: rounded corners, drop-shadow, and fade in. */
+        border-radius:.25rem;
+        box-shadow:0 .5rem .5rem rgba(0,0,0,.5);
+        opacity:0;
+        transition: opacity 0.8s ease-out;
+    }
+
+    :target .popBox {
+        position:fixed; opacity:1;
+    }
+
+    /* Light box properties */
+    .lightbox {
+        display:none;
+        text-indent:-200em;
+        background-color:rgba(0,0,0,.4);
+        width:100%;
+        height:100%;
+        position:fixed;
+        top:0;
+        left:0;
+        bottom:0;
+        right:0;
+        z-index:5;
+    }
+
+    :target .lightbox {
+        display:block;
+    }
+
+    /* The pop-ups close link, moved via CSS to the top right of the pop-up */
+    .close:link,
+    .close:visited {
+        position: absolute;
+        top: -0.75em;
+        right: -0.75em;
+        display: block;
+        width: 2em;
+        height: 2em;
+        line-height: 1.8;
+        padding: 0;
+        text-align: center;
+        text-decoration: none;
+        background-color: #000;
+        border: 2px solid #fff;
+        color: #fff;
+        border-radius: 50%;
+        box-shadow: 0 0 .5rem .5rem rgba(0,0,0,.5);
+    }
+
+    .close:before {
+        content:"X";
+    }
+
+    .close:hover,
+    .close:active,
+    .close:focus {
+        box-shadow: 0 0 .5rem .5rem rgba(255,0,0,.5);
+        background-color: #c00;
+        color: #fff;
+    }
+
+    .close {
+        text-indent: -200em;
+        display: block;
+    }
+
+    /* The pop-up content div will scroll if it has too much content */
+    .popScroll {
+        position:absolute;
+        top: 1rem;
+        left: 1rem;
+        right: 1rem;
+        bottom: 1rem;
+        overflow-y: auto;
+        *overflow-y: scroll;
+        padding-right: 0.5em;
+    }
+
+    .popScroll h2 {
+        margin-top:0
+    }
+
+    input[type=submit] {
+        border: 2px solid darkblue;
+        border-radius: .25rem;
+        background-color: white;
+        color: black;
+        padding: 2px 2px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    input[type=reset] {
+        border: 2px solid darkorange;
+        border-radius: .25rem;
+        background-color: white;
+        color: black;
+        padding: 2px 2px;
+        font-size: 14px;
+        cursor: pointer;
+    }
 </style>
-<style>
-
-/*
-
-body {color:#000; background:#fff; font:100%/1.5 arial,sans-serif;}
-
-h2 {margin-top:0}
-
-*/
-
-/* Styling applied to classes only */
-
-/* Pop-up content shifted off-screen when not in view.
-
-Still readable by screen-reader software.
-
-When targeted it fills the browser window.
-
-*/
-
-.pop-up {position:absolute; top:0; left:-500em;}
-
-.pop-up:target {position:static; left:0;}
-
-/* The pop-up itself */
-
-.popBox {
-
-background:#ffffff;
-
-/* alternatively fixed width / height and negative margins from 50% */
-
-position:absolute; left:20%; right:20%; top:20%; bottom:20%;
-
-z-index:10;
-
-border:1px solid #3a3a3a;
-
-/* CSS3 where available: rounded corners, drop-shadow, and fade in. */
-
-border-radius:.25rem;
-
-box-shadow:0 .5rem .5rem rgba(0,0,0,.5);
-
-opacity:0;
-
-transition: opacity 0.8s ease-out;
-
-}
-
-:target .popBox {position:fixed; opacity:1;}
-
-/* Light box properties */
-
-.lightbox {
-
-display:none;
-
-text-indent:-200em;
-
-background-color:rgba(0,0,0,.4);
-
-width:100%;
-
-height:100%;
-
-position:fixed;
-
-top:0;
-
-left:0;
-
-bottom:0;
-
-right:0;
-
-z-index:5;
-
-}
-
-:target .lightbox {display:block;}
-
-/* The pop-ups close link, moved via CSS to the top right of the pop-up */
-
-.close:link,
-
-.close:visited {
-
-position: absolute;
-
-top: -0.75em;
-
-right: -0.75em;
-
-display: block;
-
-width: 2em;
-
-height: 2em;
-
-line-height: 1.8;
-
-padding: 0;
-
-text-align: center;
-
-text-decoration: none;
-
-background-color: #000;
-
-border: 2px solid #fff;
-
-color: #fff;
-
-border-radius: 50%;
-
-box-shadow: 0 0 .5rem .5rem rba(0,0,0,.5);
-
-}
-
-.close:before {content:"X";}
-
-.close:hover,
-
-.close:active,
-
-.close:focus {
-
-box-shadow: 0 0 .5rem .5rem rba(255,0,0,.5);
-
-background-color: #c00;
-
-color: #fff;
-
-}
-
-.close span {
-
-text-indent: -200em;
-
-display: block;
-
-}
-
-/* The pop-up content div will scroll if it has too much content */
-
-.popScroll {
-
-position:absolute;
-
-top: 1rem;
-
-left: 1rem;
-
-right: 1rem;
-
-bottom: 1rem;
-
-overflow-y: auto;
-
-*overflow-y: scroll;
-
-padding-right: 0.5em;
-
-}
-
-.popScroll h2 {margin-top:0}
-.style14 {
-	font-size: 14px;
-	font-weight: bold;
-}
-.style19 {font-size: 10px}
-.style20 {
-	font-size: 14px;
-	color: #FF0000;
-}
-.style21 {
-	color: #2A5F00;
-	font-style: italic;
-}
-.formtext {font-family: Arial, Helvetica, sans-serif;
-font-size: 10pt;
-font-weight: normal;
-}
-.formtext1 {font-family: Arial, Helvetica, sans-serif;
-font-size: 11pt;
-font-weight: normal;
-}
-.style28 {color: #2A5F00}
-.style29 {font-size: xx-large}
-input[type=submit] {
- border: 2px solid green;
-  border-radius:.25rem;
-  background-color: white;
-  color: black;
-  padding: 2px 2px;
-  font-size: 14px;
-   cursor: pointer;
-}
-input[type=reset] {
- border: 2px solid red;
- border-radius:.25rem;
-  background-color: white;
-  color: black;
-  padding: 2px 2px;
-  font-size: 14px;
-   cursor: pointer;
-}
-input[type=Other] {
-width: 110px;
- border: 2px solid #0987CB;
- border-radius:.25rem;
-  background-color: white;
-  color: black;
-  padding: 2px 2px;
-  font-size: 14px;
-   cursor: pointer;
-}
-input[type=Other2] {
-width: 110px;
- border: 2px solid blue;
- border-radius:.25rem;
-  background-color: white;
-  color: black;
-  padding: 2px 2px;
-  font-size: 14px;
-   cursor: pointer;
-}
-
-</style>
-
 </head> 
-<body > 
-<form  style="font-family: Arial;" pbzloc="3" onsubmit="return confirm('To complete your form submission, click OK and close the open browser window. You will return to the new message window so you can post your message to the outbox');" method="post" id="myform" enctype="multipart/form-data" action="http://{FormServer}:{FormPort}">
 
+<body>
+<form style="font-family: Arial;" onsubmit="return confirm('To complete your form submission, click OK and close the browser tab. You will return to the new message window so you can post your message to the outbox.');" method="post" id="myform" enctype="multipart/form-data" action="http://{FormServer}:{FormPort}">
 
-
-
-<table width="850" border="1" cellpadding="2" cellspacing="0" bordercolor="#999999">
+<table width="750" border="1" cellpadding="2" cellspacing="0" bordercolor="#999999">
   <tr>
-    <td width="842" height="882" valign="top" nowrap="nowrap"><h3 align="center" class="style8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;<span class="style21">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="style29">Race Tracker</span></span>&nbsp;&nbsp;<span class="style19">Ver. 4.0 alpha</span>&nbsp;
-        <input name="Theversion" type="hidden" id="Theversion" value="4.0 alpha" />
-<small><b><big><span class="style13"><em><span class="style1"><small><b><big><em>&nbsp;&nbsp;<small><b><big><em>
-<input type="button" value="Form Information -  READ" 
+      <td width="842" height="882" valign="top" nowrap="nowrap">
+          <p align="center">
+                <span class="style21 style29">Race Tracker</span>
+                <span class="style19">Ver. 4.0 alpha</span>
 
-onclick="location.href = '#pop1'" />
-</em></big></b></small>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em></big></b></small>
-        <small><b><big><em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<small><b><big><em><small><b><big><em>&nbsp;&nbsp;</em></big></b></small></em></big></b></small><small><b><big><em><small><b><big><em>&nbsp;&nbsp;</em></big></b></small></em></big></b></small>&nbsp;&nbsp;&nbsp;</em></big></b></small><small><b><big><em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em></big></b></small>
-        </span></em></span> <small><b><big><span class="style13"><em><span class="style1"><small><b><big><em>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</em></big></b></small></span></em></span></big></b></small></big></b></small></h3>
-      <p class="style13"> &nbsp; Race/Event Name:            
-           <input name="EventTitle" type="text" id="EventTitle"  onchange = "store();" size="40" maxlength="35" required="required" placeholder="Races or Event Name"/> 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;<span class="style1"><span class="style8">
-</span></span></p>
-        <p class="style13">&nbsp;   Send to:           
-          <input name="address" type="text" id="address" onchange = "store();" size="50" maxlength="45"  title= "Seperate multiple calls or address's with a semicolon;" required placeholder = "Winlink Radio Call or Email"/>
-  &nbsp;Aid Station:   
-          <select name="Location" type="text" id="Location" onchange="store();" size="3" required="required" maxlength="2">
-              <option value="MM" selected="selected">Marble Mountain SnoPark</option>
-              <option value="BL" selected="selected">Blue Lake</option>
-              <option value="WR" selected="selected">Windy Ridge</option>
-              <option value="JR" selected="selected">Johnston Ridge</option>
-              <option value="CW" selected="selected">Coldwater Lake</option>
-              <option value="NP" selected="selected">Norway Pass</option>
-              <option value="EP" selected="selected">Elk Pass</option>
-              <option value="WM" selected="selected">Wright Meadow (Rd.9327)</option>
-              <option value="SB" selected="selected">Spencer Butte</option>
-              <option value="LR" selected="selected">Lewis River</option>
-              <option value="QR" selected="selected">Quartz Ridge</option>
-              <option value="CB" selected="selected">Council Bluff</option>
-              <option value="CH" selected="selected">Chain of Lakes</option>
-              <option value="KT" selected="selected">Klickitat</option>
-              <option value="TS" selected="selected">Twisted Sister</option>
-              <option value="OC" selected="selected">Owen&acute;s Creek</option>
-              <option value="FN" selected="selected">Finish (Bigfoot Base)</option>
-          </select>
-&nbsp;<span class="style1"><span class="style8">        <input name="FormatNote" type="hidden" id="FormatNote" value="* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet." />
+                <input name="Theversion" type="hidden" id="Theversion" value="4.0 alpha" />
+                <span class="style1">
+                    <input type="button" value="Form Information - READ" onclick="location.href='#pop1'" />
+                </span>
+          </p>
 
-</span></span> <em>&nbsp;&nbsp;&nbsp; <span class="style1"><span class="style8">
-</span></span></em></p>
-        <p class="style13">&nbsp;&nbsp;Subject: <span class="style1"><span class="style8"> 
-        <input name="msgsubject" type="text"  id="msgsubject" readonly="readonly" size="60" maxlength="70" />
-&nbsp;</span></span><span class="style21">(subject is created for you with 1st entry)</span><span class="style1"><span class="style8"> &nbsp;&nbsp;</span></span></p>
-        <p class="style13"><span class="style1"><span class="style8">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <em class="style21 style9">The  entry boxes above will remain with what you enter the first time. You overwrite to change.</em> </span></span>
-          <textarea name="beforeformatting" id="beforeformatting"  style="display: none;"></textarea>   
-          <input type="file" id="txtfiletoread" accept=".txt"  style="display: none;"/>      
-            </p>
-        <hr />
-        <p align="left" class="style13"><span class="style14">&nbsp;</span><span class="style20">Bib or Rider #: </span> 
-          <input name="RiderNum" type="text" id="RiderNum" onkeypress="if(event.keyCode==13){a=setfocus(); return false;}" size="15" maxlength="13"  onblur="javascript:this.value=this.value.trim();this.value=this.value.toUpperCase(); putTime();" />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Click box to add Time:
-<input name="Timefld" type="text" id="Timefld" style=" width: 50px;" onkeypress="if(event.keyCode==13){alert('Click: IN - OUT - DROP');return false;}" size="6" maxlength="6"  onblur=" this.value=this.value.trim(); " /> 
-&nbsp;<span class="style21">(accept or modify the time)&emsp;<input type="checkbox" id="yesterday" name="yesterday" value="Yesterday" /><label for="yesterday">Check this box if time was yesterday.</label> </span></p>
-        <hr />        <p align="left" class="style13">&nbsp;&nbsp;Now select ONE to create an Entry:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          <span class="style1">
-          <input name="Inbtn" type="button" id="Inbtn" onclick="AddIn();" value="In" />
-          </span><span class="style1">
-          <input name="Outbtn" type="button" id="Outbtn" onclick="AddOut();" value="Out" />
-        </span>
-<input name="Dropbtn" type="button" id="Dropbtn" onclick="AddDrop()" value="Drop" />
-        &nbsp;
-        <input name="sendto" type="hidden" id="sendto" size="30" /> 
-        <textarea name="parseme" cols="60" id="parseme" style="display: none;"></textarea>
-        &nbsp;<span class="style1 style9"><span style="font-family: Calibri;">
-        <input name="savebtn" type="Other2" id="savebtn"  onclick="SaveData()" value="Save Race data " />
-        </span></span>&nbsp;<span class="style8"><small><b><big>
-        <small><b><big>
-        <input name="loadbtn" type="Other" id="loadbtn" onclick="document.getElementById('txtfiletoread').click();" value=" Load Race data" />
-        </big></b></small>        </big></b></small></span> <em>&nbsp;</em> <span class="style8">
-        
-        &nbsp;
-        </span>  </p>
-        <hr />
-        <div align="left"></div>
-        <table width="588"  border="1" align="center" cellpadding="0" cellspacing="0">
-          <tr>
-            <td width="584" height="500" valign="top" bgcolor="f8f8ff"><div align="left">
-              <p align="center">
-                      <span class="style13">Number of Entries</span>
-                  <input name="numlines" type="text" id="numlines" style="color: red;" readonly value="0" size="5" />
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="style1 style9"><span class="style1">
-                  <input name="doclear" type="reset" id="doclear" onclick="Docleardata()" value="Clear Entries" />
-</span></span> </span></p>
-              <p align="center">
-                <textarea name="TheData" cols="55" placeholder="NOTE: No more than 20 Entries in one message, if using UltraLive." rows="23" id="TheData"  onkeypress="if(event.keyCode==13){countLines2() }" onblur="countLines2()" ></textarea>
-</p>
-              <p align="center"><span class="style13">  Comments:</span><span class="style13"></span><span class="style13"><br />
- 
-                      <textarea name="Comment" cols="55" rows="2" id="Comment" onkeyup="AutoGrowTextArea(this)" ></textarea>
-</span></p>
-              </div></td>
-          </tr>
-          <tr>
-            <td height="88" bgcolor="ffffe6">            <div align="left">
-              <p align="center" class="style1 style9"><span class="style13"> </span>                <span class="style13"> </span>
-                <input type="button" value="Format for UltraLive Submittal (optional)" onclick="DoConfirm();" />
-&nbsp;&nbsp;&nbsp;&nbsp;<span class="style13">
-<input name="undo" type="button" id="undo"  onclick="undoformatting()" value="Remove UltraLive Formatting" />
-</span></p>
-              <p align="left" class="style1 style9"><span class="style1"><small><span class="formtext"><span style="font-family: Calibri;"><small><span style="font-family: Calibri;"><small><span style="font-family: Calibri;"><small><span class="formtext1"><span style="font-family: Calibri;"><small><big><big><small><span style="font-family: Calibri;">
-&nbsp;
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              <input style="height: 28px; width: 85px; c" title="After submitting, close browser, then address message for posting" class="SubmitBtn" enctype="multipart/form-data" id="Submit" method="Post" name="Submit" value="SUBMIT" type="submit" />
-  &nbsp; 
-   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />            
-            </div></td></tr>
-        </table>
+          <hr />
 
+          <p>
+              <span>
+                  <label for="EventTitle">Race or Event Name:</label>
+                  <input name="EventTitle" type="text" id="EventTitle" onchange="store();" size="40" maxlength="35" placeholder="Race or Event Name" required />
+                  <label for="MessageNumber">Message Number:</label>
+                  <input name="MessageNumber" type="text" id="MessageNumber" onchange="store();" size="6" maxlength="4" placeholder="1" />
+              </span>
+          </p>
 
+          <p>
+              <label for="address">Send to:</label>
+              <input name="address" type="text" id="address" onchange="store();" size="50" maxlength="45" title="Separate multiple calls or addresses with a semicolon;" placeholder="Winlink Radio Call or Email" required />
+              <label for="Location">Aid Station:</label>
+              <select name="Location" type="text" id="Location" onchange="store();" size="3" maxlength="2" required>
+                  <option value="MM_Marble Mountain SnoPark">Marble Mountain SnoPark</option>
+                  <option value="BL_Blue Lake">Blue Lake</option>
+                  <option value="WR_Windy Ridge" selected>Windy Ridge</option>
+                  <option value="JR_Johnston Ridge">Johnston Ridge</option>
+                  <option value="CW_Coldwater Lake">Coldwater Lake</option>
+                  <option value="NP_Norway Pass">Norway Pass</option>
+                  <option value="EP_Elk Pass">Elk Pass</option>
+                  <option value="WM_Wright Meadow (Rd.9327)">Wright Meadow (Rd.9327)</option>
+                  <option value="SB_Spencer Butte">Spencer Butte</option>
+                  <option value="LR_Lewis River">Lewis River</option>
+                  <option value="QR_Quartz Ridge">Quartz Ridge</option>
+                  <option value="CB_Council Bluff">Council Bluff</option>
+                  <option value="CH_Chain of Lakes">Chain of Lakes</option>
+                  <option value="KT_Klickitat">Klickitat</option>
+                  <option value="TS_Twin Sisters">Twisted Sister</option>
+                  <option value="OC_Owens Creek">Owen&acute;s Creek</option>
+                  <option value="FN_Finish (Bigfoot Base)">Finish (Bigfoot Base)</option>
+              </select>
+              <span>
+                  <input name="FormatNote" type="hidden" id="FormatNote" value="* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet." />
+              </span>
+          </p>
+
+          <p>
+              <label for="msgsubject">Subject:</label>
+              <span class="style8">
+                  <input name="msgsubject" type="text" id="msgsubject" readonly="readonly" size="60" maxlength="70" />
+              </span>
+          </p>
+
+          <p class="style21">The entry boxes above will remain with what you enter the first time. You overwrite to change.</p>
+          <textarea name="beforeformatting" id="beforeformatting" style="display: none;"></textarea>
+          <input type="file" id="txtfiletoread" accept=".txt" style="display: none;" />
+
+          <hr />
+
+          <p>
+              <span class="style20">Bib or Rider #:</span>
+              <input name="RiderNum" type="text" id="RiderNum" onkeypress="if(event.keyCode==13){a=setfocus(); return false;}" size="15" maxlength="13" onblur="javascript:this.value=this.value.trim();this.value=this.value.toUpperCase(); putTime();" />
+              Time:
+              <input name="Timefld" type="text" id="Timefld" style=" width: 50px;" onkeypress="if(event.keyCode==13){alert('Click: IN - OUT - DROP');return false;}" size="6" maxlength="6" onblur=" this.value=this.value.trim(); " />
+              <span class="style21">
+                  <label for="yesterday">Check this box if time was yesterday:</label>
+                  <input type="checkbox" id="yesterday" name="yesterday" value="Yesterday" />
+              </span>
+          </p>
+
+          <p>Select ONE to create an Entry:
+              <input name="Inbtn" type="button" id="Inbtn" onclick="AddIn();" value="In" title="Participant arrived at this station." />
+              <input name="Outbtn" type="button" id="Outbtn" onclick="AddOut();" value="Out" title="Participant departed from this station." />
+              <input name="Dropbtn" type="button" id="Dropbtn" onclick="AddDrop()" value="Drop" title="Participant dropped from race." />
+              <input name="sendto" type="hidden" id="sendto" size="30" />
+              <textarea name="parseme" cols="60" id="parseme" style="display: none;"></textarea>
+              <input name="savebtn" type="button" class="other2" id="savebtn" onclick="SaveData()" value="Save Race data" title="Save data to a file." />
+              <input name="loadbtn" type="button" class="other" id="loadbtn" onclick="document.getElementById('txtfiletoread').click();" value="Load Race data" title="Load data from a file." />
+          </p>
+
+          <hr />
+
+          <table width="588" border="1" align="center" cellpadding="0" cellspacing="0">
+              <tr>
+                  <td width="584" height="500" valign="top" bgcolor="ghostwhite">
+                      <div align="left">
+                          <p align="center">
+                              <label for="numlines">Number of Entries</label>
+                              <input name="numlines" type="text" id="numlines" style="color:darkorange" readonly value="0" size="5" title="Number of bib entries submitted." />
+                              <input name="doclear" type="button" id="doclear" onclick="Docleardata()" value="Clear Entries" title="Clear all runner entries." />
+                          </p>
+
+                          <p align="center">
+                              <textarea name="TheData" cols="55" placeholder="UltraLive: Limit to 20 entries." rows="23" id="TheData" onkeypress="if(event.keyCode==13){countLines2() }" onblur="countLines2()"></textarea>
+                          </p>
+
+                          <p align="center">
+                              <label for="Comment">Comments:</label>
+                          </p>
+                          <p align="center">
+                              <textarea name="Comment" cols="55" rows="2" id="Comment" onkeyup="AutoGrowTextArea(this)" placeholder="Enter a short comment up to 110 characters."></textarea>
+                          </p>
+                      </div>
+                  </td>
+              </tr>
+
+              <tr>
+                  <td height="88" bgcolor="LightYellow">
+                      <div align="left">
+                          <p align="center">
+                              <input type="button" title="Click to format for UltraLive submittal" value="Format for UltraLive Submittal (optional)" onclick="DoConfirm();" />
+                              <input name="undo" title="Click to undo UltraLive formtting" type="button" id="undo" onclick="undoformatting()" value="Remove UltraLive Formatting" />
+                          </p>
+                          <p align="center">
+                              <input style="height: 28px; width: 85px;" title="After submitting, close browser, then address message for posting" class="SubmitBtn" enctype="multipart/form-data" id="Submit" method="Post" name="Submit" value="SUBMIT" type="submit" />
+                          </p>
+                      </div>
+                  </td>
+              </tr>
+          </table>
       </td>
   </tr>
 </table>
 </form>
+
 <div id="pop1" class="pop-up">
         <!-- The pop-up block -->
 
@@ -1118,7 +1093,7 @@ onclick="location.href = '#pop1'" />
 
           <div class="popScroll">
 
-           <p> 
+           <p>
   Winlink Operator Supplemental Information<br /><br />
   If NOT doing UltraLive, then data entered is formatted as TAB delineated text in the sent message, for spreadsheet entry or a running log. <br /><br />
   >>> The Subject line will be formatted for you.<<< <br /><br />
@@ -1161,10 +1136,10 @@ Sample Data Report</p>
           </div>
      <!-- The close pop-up link correctly positioned at the end of the content block -->
 
-<a class="close" href="#links"><span>Back
-
-to links</span></a> </div>
-
+<a class="close" href="#links">
+            <span>Back to links</span>
+</a>
+        </div>
 </div>
 
 <div id="pop2" class="pop-up">
@@ -1175,19 +1150,15 @@ to links</span></a> </div>
 
           <div class="popScroll">
 
-           <p> 
-  Ultralive formatting Information<p></p>
-
-From <a href="https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit" target="_blank">https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit</a>
-<br /><p></p>
-  Suggest you download and have a copy for event.<br />
+           <p>Ultralive formatting Information From <a href="https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit" target="_blank">https://docs.google.com/document/d/1J01uupj-9hcXdfFJV5jQau0pp8E6EL_dVkS7H5RjulM/edit</a>
+            <br />
+              Suggest you download and have a copy for event.
+              <br />
           </div>
      <!-- The close pop-up link correctly positioned at the end of the content block -->
 
-<a class="close" href="#links"><span>Back
-
-to links</span></a> </div>
-
+<a class="close" href="#links">Back to links</a>
+        </div>
 </div>
 
 </body>

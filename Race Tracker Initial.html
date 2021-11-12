@@ -14,6 +14,10 @@
 <!--
 
         function store() {
+            var formVer = "0.1.8";
+            document.getElementById("thisVersion").innerHTML = formVer.toString();
+            //document.getElementById("theVersion").innerHTML = formVer.toString();
+            localStorage.setItem("BFVersion", formVer);
             var addressFormatted = document.getElementById('address');
             localStorage.setItem("RTrackeradd", addressFormatted.value);
             var locationFormatted = document.getElementById('Location');
@@ -53,7 +57,10 @@
             var regulartitle = document.getElementById('EventTitle').value + ' ' + locationLong + ' Message #' + document.getElementById('MessageNumber').value;
             document.getElementById('msgsubject').value = regulartitle;
             document.getElementById('MessageNumber').value = storedMsgNumber;
-            document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
+
+            var formatNoteText = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet.";
+            formatNoteText = formatNoteText + "\nTemplate Version " + localStorage.getItem("BFVersion").toString();
+            document.getElementById('FormatNote').value = formatNoteText;
         }
 
         function ClearForm() {
@@ -66,7 +73,10 @@
             document.getElementById("RiderNum").disabled = false;
             document.getElementById("numlines").disabled = false;
             document.getElementById("numlines").value = '0';
-            document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
+
+            var formatNoteText = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet.";
+            formatNoteText = formatNoteText + "\nTemplate Version " + localStorage.getItem("BFVersion").toString();
+            document.getElementById('FormatNote').value = formatNoteText;
         }
 
         function ClearParticipantData() {
@@ -78,7 +88,10 @@
             document.getElementById("RiderNum").disabled = false;
             document.getElementById("numlines").disabled = false;
             document.getElementById("numlines").value = '0';
-            document.getElementById('FormatNote').value = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet."
+
+            var formatNoteText = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet.";
+            formatNoteText = formatNoteText + "\nTemplate Version " + localStorage.getItem("BFVersion").toString();
+            document.getElementById('FormatNote').value = formatNoteText;
         }
 
         function countLines2() {
@@ -750,6 +763,9 @@
 
             getit();
             Fixfields();
+
+            var thisVersion = "0.1.8";
+            localStorage.setItem("formVersion", thisVersion);
         }
 
         function Fixfields() {
@@ -976,10 +992,11 @@
             <tr>
                 <td width="842" height="882" valign="top" nowrap="nowrap">
                     <p align="center">
-                        <span class="style21 style29">Race Tracker</span>
-                        <span class="style19">Ver. 4.0 alpha</span>
+                        <span class="style21 style29">Bigfoot Bib Report</span>
+                        <p class="style19" id="thisVersion">undeclared</p>
 
-                        <input name="Theversion" type="hidden" id="Theversion" value="4.0 alpha" />
+<!--                        <input name="Theversion" type="hidden" id="Theversion" value="0.1.8" />-->
+                        <input name="Theversion" type="hidden" id="Theversion" />
                         <span class="style1">
                             <input type="button" value="Form Information - READ" onclick="location.href='#pop1'" />
                         </span>

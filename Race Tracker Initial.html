@@ -7,16 +7,14 @@
     <meta name="description" content="Race Tracker Form for Winlink Express created by KG6SJT, modified by K7RMZ for Bigfoot ultra marathon comms-support events." />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Race Tracker</title>
+    <title>Bigfoot Bib Tracker</title>
 
     <script language="javascript" type="text/javascript">
-
-<!--
-
+    <!--
         function store() {
-            var formVer = "0.1.8";
+            var formVer = "0.1.9";
             document.getElementById("thisVersion").innerHTML = formVer.toString();
-            //document.getElementById("theVersion").innerHTML = formVer.toString();
+            document.getElementById("Theversion").value = formVer.toString();
             localStorage.setItem("BFVersion", formVer);
             var addressFormatted = document.getElementById('address');
             localStorage.setItem("RTrackeradd", addressFormatted.value);
@@ -57,9 +55,7 @@
             var regulartitle = document.getElementById('EventTitle').value + ' ' + locationLong + ' Message #' + document.getElementById('MessageNumber').value;
             document.getElementById('msgsubject').value = regulartitle;
             document.getElementById('MessageNumber').value = storedMsgNumber;
-
             var formatNoteText = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet.";
-            formatNoteText = formatNoteText + "\nTemplate Version " + localStorage.getItem("BFVersion").toString();
             document.getElementById('FormatNote').value = formatNoteText;
         }
 
@@ -73,9 +69,7 @@
             document.getElementById("RiderNum").disabled = false;
             document.getElementById("numlines").disabled = false;
             document.getElementById("numlines").value = '0';
-
             var formatNoteText = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet.";
-            formatNoteText = formatNoteText + "\nTemplate Version " + localStorage.getItem("BFVersion").toString();
             document.getElementById('FormatNote').value = formatNoteText;
         }
 
@@ -88,9 +82,7 @@
             document.getElementById("RiderNum").disabled = false;
             document.getElementById("numlines").disabled = false;
             document.getElementById("numlines").value = '0';
-
             var formatNoteText = "* The entries in this email are TAB delimited. This allows you to copy and paste into a spreadsheet.";
-            formatNoteText = formatNoteText + "\nTemplate Version " + localStorage.getItem("BFVersion").toString();
             document.getElementById('FormatNote').value = formatNoteText;
         }
 
@@ -162,7 +154,6 @@
 
         function Docleardata() {
             if (confirm("Clear all participant data?")) {
-                //ClearForm();
                 ClearParticipantData();
             }
         }
@@ -293,7 +284,6 @@
             document.getElementById('FormatNote').value = "* The entries in this email have been formatted for use with Ultralive."
         }
 
-
         function SelectTheText(fieldName) {
             document.forms[0].sendto.focus();
             document.forms[0].sendto.select();
@@ -362,7 +352,6 @@
 
                 var locationVal = document.getElementById("Location").value;
                 var shortLoc = shortenLocation(locationVal);
-
                 var Previoustime = document.getElementById("TheData").value;
                 document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "IN", TheTime, dayOfMonth, shortLoc);
                 document.getElementById("RiderNum").value = '';
@@ -413,7 +402,6 @@
 
                 var locationVal = document.getElementById("Location").value;
                 var shortLoc = shortenLocation(locationVal);
-
                 var Previoustime = document.getElementById("TheData").value;
                 document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "OUT", TheTime, dayOfMonth, shortLoc);
                 document.getElementById("RiderNum").value = '';
@@ -474,7 +462,6 @@
 
                 var locationVal = document.getElementById("Location").value;
                 var shortLoc = shortenLocation(locationVal);
-
                 var Previoustime = document.getElementById("TheData").value;
                 document.getElementById("TheData").value = FormatBibRecord(Previoustime, TheRunner, "DROP", TheTime, dayOfMonth, shortLoc);
                 document.getElementById("RiderNum").value = '';
@@ -556,7 +543,7 @@
 
         function saveTextAsFile(fileNameToSaveAs, textToWrite) {
             var textToWrite = document.getElementById('parseme').value;
-            var fileNameToSaveAs = "Race Tracking data " + DateforFile() + ".txt";
+            var fileNameToSaveAs = "Bigfoot Bib Data " + DateforFile() + ".txt";
             fileNameToSaveAs = prompt("", fileNameToSaveAs);
 
             /* Saves a text string as a blob file*/
@@ -606,7 +593,7 @@
 
         function DateforFile(RightNow) {
             var d = new Date(),
-                thisyear = d.getFullYear();
+            thisyear = d.getFullYear();
             thismonth = d.getMonth();
             thismonth = thismonth + 1;
 
@@ -664,9 +651,7 @@
         }
 
         function populateForm(o) {
-
             o = JSON.parse(document.getElementById('parseme').value);
-
             if (!isObject(o)) return;
 
             for (var i in o) {
@@ -763,9 +748,6 @@
 
             getit();
             Fixfields();
-
-            var thisVersion = "0.1.8";
-            localStorage.setItem("formVersion", thisVersion);
         }
 
         function Fixfields() {
@@ -993,9 +975,8 @@
                 <td width="842" height="882" valign="top" nowrap="nowrap">
                     <p align="center">
                         <span class="style21 style29">Bigfoot Bib Report</span>
-                        <p class="style19" id="thisVersion">undeclared</p>
-
-<!--                        <input name="Theversion" type="hidden" id="Theversion" value="0.1.8" />-->
+                        <span class="style19">Version </span>
+                        <span class="style19" id="thisVersion">.</span>
                         <input name="Theversion" type="hidden" id="Theversion" />
                         <span class="style1">
                             <input type="button" value="Form Information - READ" onclick="location.href='#pop1'" />
